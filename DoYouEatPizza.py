@@ -12,6 +12,8 @@ from PySide2.QtCore import *
 from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
+import pygame
+
 
 class MainWindow(QMainWindow):
 
@@ -46,6 +48,11 @@ class MainWindow(QMainWindow):
         self.central_widget.addWidget(fame_widget)
         self.central_widget.setCurrentWidget(fame_widget)
 
+        music_file = "voice/select_menu.mp3"
+        pygame.mixer.init()
+        pygame.mixer.music.load(music_file)
+        pygame.mixer.music.play()
+
     def clickSub(self):
         sub_widget = SubWidget(self)
         sub_widget.sidedishBtn.clicked.connect(self.clickSub_side)
@@ -63,10 +70,14 @@ class MainWindow(QMainWindow):
         sub_widget.rec3Btn.clicked.connect(
             lambda img_name="rose_pasta", name="스파이시 씨푸드 로제 파스타", price=8800, menu="sidedish": self.click_menu(img_name,
                                                                                                                name,
-                                                                                                               price,
+                                                                                                               price,))
 
         self.central_widget.addWidget(sub_widget)
         self.central_widget.setCurrentWidget(sub_widget)
+
+        pygame.mixer.init()
+        pygame.mixer.music.load("voice/select_menu.mp3")
+        pygame.mixer.music.play()
 
     def clickRec(self):
 
@@ -1155,9 +1166,6 @@ class SubAboutWidget(QWidget):
     def setPrice(self):
         self.pzPrice.setText(str(self.num_spin.value() * self.price) + "원")
         self.pzPrice.resize(self.pzPrice.sizeHint())
-
-        pixmap = QPixmap("images/toppingBack.png")
-        self.subBack.setPixmap(QPixmap(pixmap))
 
 
 

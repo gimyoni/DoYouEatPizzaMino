@@ -32,21 +32,12 @@ self.df1 = pd.DataFrame.from_records([{'날짜': '2020-11-30', '메뉴': '피자
 
 self.df2 = pd.read_excel("pizzaInfo.xlsx", sheet_name="Sheet3")
 
+print(self.df2)
 
-def addResultData(date):
-        pizza_result = pd.read_excel("pizzaInfo.xlsx", sheet_name="Sheet1")
-        # new_row = {'날짜': date, '메뉴': name, '개수': amount, '가격': price}
-        # self.df1 = self.df2.append(new_row, ignore_index=True)
-        #
-        # self.df1.to_excel("pizzaInfo.xlsx", sheet_name='Sheet1', index=False)
-        print(self.df1)
 
-def addTemData(name,amount, price):
+def addData(date, name,amount, price, dough):
 
-        #pizza_tem = pizza_tem.append({'메뉴': name, '개수': amount, '가격': price}, ignore_index=True)
-        #pizza_tem = pd.read_excel("pizzaInfo.xlsx", sheet_name="Sheet2")
-
-        new_row = {'메뉴': name, '개수': amount, '가격': price}
+        new_row = {'날짜' : date, '메뉴': name, '개수': amount, '가격': price, '도우':dough}
         self.df2 = self.df2.append(new_row, ignore_index=True)
         self.df2.to_excel("pizzaInfo.xlsx", sheet_name='Sheet3', index=False)
         print()
@@ -57,9 +48,6 @@ class MainWindow(QMainWindow):
 
     def __init__(self, parent=None):
         super(MainWindow, self).__init__(parent)
-
-        self.date = QDate.currentDate()
-
 
         self.central_widget = QStackedWidget()
         self.setCentralWidget(self.central_widget)
@@ -187,10 +175,19 @@ class MainWindow(QMainWindow):
     def click_menu(self, img_name, name, sizeL, sizeM):
         about_widget = AboutWidget(self)
         about_widget.setting(img_name, name, sizeL, sizeM)
-        about_widget.backBtn.clicked.connect(self.click_back)
-
+        about_widget.backBtn.clicked.connect(self.clickFame)
+        about_widget.goOrder.clicked.connect(self.click_goOrder)
         self.central_widget.addWidget(about_widget)
         self.central_widget.setCurrentWidget(about_widget)
+
+    def click_goOrder(self):
+        order_widget = OrderWidget(self)
+        order_widget.pizzaBtn.clicked.connect(self.clickFame)
+        order_widget.subBtn.clicked.connect(self.clickSub)
+        order_widget.buyBtn.clicked.connect(self.clickBuy)
+
+        self.central_widget.addWidget(order_widget)
+        self.central_widget.setCurrentWidget(order_widget)
 
     def click_back(self):
         order_widget = OrderWidget(self)
@@ -207,8 +204,8 @@ class MainWindow(QMainWindow):
                                       QMessageBox.No | QMessageBox.Yes, QMessageBox.Yes)
         if option == QMessageBox.Yes:
             buy_widget = BuyWidget(self)
-
             buy_widget.turnBtn.clicked.connect(self.clickTurn)
+
             self.central_widget.addWidget(buy_widget)
             self.central_widget.setCurrentWidget(buy_widget)
 
@@ -528,6 +525,7 @@ class OrderWidget(QWidget):
         self.cb = QComboBox(self)
         self.cb.move(500, 300)
 
+
         self.makeCombo()
 
 
@@ -562,31 +560,42 @@ class OrderWidget(QWidget):
             menu = ""
             self.myCartInfo.setText("")
             self.cartPrice = 0
+
             with open("nowPizzaCart.txt", "r") as f:
                 lines = f.readlines()
-
             with open("nowPizzaCart.txt", "w") as f:
                 for line in lines:
                     result = line.strip().split('\t')
                     name = result[0]
                     amount = result[1]
                     price = result[2]
+                    dough = result[3]
+                    size = result[4]
                     menu = name + " " + price
-                    print("지워지는 메뉴 : "+menu)
-                    print("이메뉴 아니면 괜찮음 : "+self.lb.text())
                     if menu != self.lb.text():
-                        print("이메뉴는 살아남음 : " + self.lb.text())
+                        self.cartPrice += int(price)
+                        f.write(line)
+                        print(line)
+                        self.myCartInfo.setText(self.myCartInfo.text()+name+" "+ str(amount)+"개 "+str(price)+"원\n"+dough+"/ 사이즈 :"+size)
 
-                        print("+"+price)
+
+            with open("nowSubCart.txt", "r") as f:
+                lines = f.readlines()
+
+            with open("nowSubCart.txt", "w") as f:
+                for line in lines:
+                    result = line.strip().split('\t')
+                    name = result[0]
+                    amount = result[1]
+                    price = result[2]
+                    menu = name + " " + price
+                    if menu != self.lb.text():
                         self.cartPrice += int(price)
                         f.write(line)
                         print(line)
                         self.myCartInfo.setText(
                             self.myCartInfo.text() + name + " " + str(amount) + "개 " + str(price) + "원\n")
                         print(self.cartPrice)
-                    else:
-                        print("실행됨")
-                        print("이메뉴는 죽었음 : " + self.lb.text())
 
             self.allPrice.setText("총 금액 " + str(self.cartPrice))
             print(str(self.cartPrice))
@@ -594,6 +603,7 @@ class OrderWidget(QWidget):
 
     def showCart(self):
         count = 0
+        self.text = QTextBrowser(self)
 
         with open('nowPizzaCart.txt') as file:
             for line in file.readlines():
@@ -607,7 +617,8 @@ class OrderWidget(QWidget):
 
                 count += int(result[1])
                 self.cartPrice += int(price)
-                self.myCartInfo.setText(self.myCartInfo.text()+name+" "+ str(amount)+"개 "+str(price)+"원\n")
+                self.myCartInfo.setText(self.myCartInfo.text()+name+" "+ str(amount)+"개 "+str(price)+"원\n"+dough+", 사이즈 :"+size)
+
 
 
         with open('nowSubCart.txt') as file:
@@ -616,15 +627,11 @@ class OrderWidget(QWidget):
                 name = result[0]
                 amount = result[1]
                 price = result[2]
-                dough = result[3]
-                size = result[4]
                 self.cartPrice += int(price)
                 self.myCartInfo.setText(self.myCartInfo.text() + name+" "+ str(amount)+"개 "+str(price)+"원\n")
 
-
-
-
         self.allPrice.setText("총 금액 "+str(self.cartPrice))
+
 
 
 class BuyWidget(QWidget):
@@ -648,6 +655,20 @@ class BuyWidget(QWidget):
         self.myCartInfo.move(50, 420)
         self.allPrice.move(50, 700)
 
+        self.date = QDate.currentDate()
+
+        with open('nowPizzaCart.txt') as file:
+            for line in file.readlines():
+                result = line.strip().split('\t')
+                print(result)
+                name = result[0]
+                amount = result[1]
+                price = result[2]
+                dough = result[3]
+                size = result[4]
+                addData(self.date.toString(Qt.ISODate), name, amount, price, dough)
+                print(self.date.toString(Qt.ISODate), name, amount, price, dough)
+
         count = 0
         self.cartPrice = 0
         with open('nowPizzaCart.txt') as file:
@@ -669,8 +690,6 @@ class BuyWidget(QWidget):
                 name = result[0]
                 amount = result[1]
                 price = result[2]
-                dough = result[3]
-                size = result[4]
 
                 self.cartPrice += int(price)
                 self.myCartInfo.setText(self.myCartInfo.text() + name + " " + str(amount) + "개 " + str(price) + "원\n")
@@ -678,11 +697,12 @@ class BuyWidget(QWidget):
         self.allPrice.setText("총 금액 " + str(self.cartPrice)+"이 결제 되었습니다.\n주문 번호 : "+ str(num))
         num+=1
 
+
+
         self.turnBtn = QPushButton('처음으로', self)
         self.turnBtn.resize(200, 200)
         self.turnBtn.move(500, 500)
 
-        # 자동으로 돌아가게도 만들 것
 
 
 
@@ -1485,26 +1505,25 @@ class AboutWidget(QWidget):
         self.sizePrice = 0
         self.doughPrice = 0
         self.pizzaAmount = 1
-        self.pizzaPrice = self.sizePrice + self.doughPrice
         self.resultPrice = 0
+        self.mainPrice =0
+        self.cheesePrice =0
+        self.afterPrice =0
+        self.pizzaPrice = self.sizePrice + self.doughPrice + self.mainPrice + self.cheesePrice + self.afterPrice
 
     def setting(self, img_name, name, size_l, size_m):
-
-        self.txtPrice = QLabel(str(self.resultPrice),self)
-        self.txtPrice.move(50, 850)
-        self.txtPrice.setFont(QFont("여기어때 잘난체 OTF", 10))
 
         self.pzPic = QLabel(self)
         self.pzPic.setPixmap(QPixmap("images/pizzamenu/"+img_name+".jpg"))
         self.pzPic.setScaledContents(True)
-        self.pzPic.setGeometry(QRect(50, 300, 300, 300))
+        self.pzPic.setGeometry(QRect(50, 300, 350, 350))
 
         self.pzName = QLabel(name, self)
         self.pzName.move(50, 250)
         self.pzName.setFont(QFont("여기어때 잘난체 OTF", 20))
 
         self.sizeTxt = QLabel("사이즈 선택", self)
-        self.sizeTxt.move(400, 280)
+        self.sizeTxt.move(420, 300)
         self.sizeTxt.setFont(QFont("여기어때 잘난체 OTF", 15))
 
         self.sizeL = size_l
@@ -1521,56 +1540,114 @@ class AboutWidget(QWidget):
         dSize.addItem(self.sizeLarge)
         dSize.addItem(self.sizeMid)
 
-        dSize.move(400, 320)
+        dSize.move(420, 340)
 
         dSize.activated[str].connect(self.doughSizeFunc)
 
         self.doughTxt = QLabel('도우 선택', self)
-        self.doughTxt.move(400, 370)
+        self.doughTxt.move(420, 380)
         self.doughTxt.setFont(QFont("여기어때 잘난체 OTF", 15))
 
         cb = QComboBox(self)
         cb.addItem('도우 선택')
         cb.addItem('오리지널 도우(기본)')
         cb.addItem('나폴리 도우')
-        cb.addItem('씬 도우(기본 갈릭디핑 소스 미제공')
+        cb.addItem('씬 도우(갈릭디핑 소스 미제공)')
         cb.addItem('슈퍼시드 함유 도우')
         cb.addItem('오리지널 도우(칠리핫도그 엣지)')
         cb.addItem('오리지널 도우(더블 치즈엣지)')
-        cb.move(400, 410)
+        cb.move(420, 420)
 
         cb.activated[str].connect(self.doughSelect)
 
         self.pzAmountName = QLabel('피자 수량', self)
-        self.pzAmountName.move(400, 460)
+        self.pzAmountName.move(420, 460)
         self.pzAmountName.setFont(QFont("여기어때 잘난체 OTF", 15))
 
         self.spinbox = QSpinBox(self)
         self.spinbox.setMinimum(1)
         self.spinbox.setMaximum(10)
         self.spinbox.setSingleStep(1)
-        self.spinbox.move(450, 500)
+        self.spinbox.move(480, 500)
 
         self.pzAmountLabel = QLabel('1', self)
-        self.pzAmountLabel.move(400, 500)
+        self.pzAmountLabel.move(440, 500)
         self.pzAmountLabel.setFont(QFont("여기어때 잘난체 OTF", 15))
 
         self.spinbox.valueChanged.connect(self.value_changed)
 
-        self.pzExplain = QLabel("#드라이에이징_스테이크 #트러플", self)
-        self.pzExplain.move(520, 890)
-        self.pzExplain.setFont(QFont("여기어때 잘난체 OTF", 8))
-        self.pzExplain.setStyleSheet("Color : gray")
+        self.priceLabel = QLabel('총 가격', self)
+        self.priceLabel.move(440, 700)
+        self.priceLabel.setFont(QFont("여기어때 잘난체 OTF", 15))
+
+        self.txtPrice = QLabel(str(self.resultPrice), self)
+        self.txtPrice.move(530, 700)
+        self.txtPrice.setFont(QFont("여기어때 잘난체 OTF", 15))
+
+
+        # self.pzExplain = QLabel("#드라이에이징_스테이크 #트러플", self)
+        # self.pzExplain.move(520, 890)
+        # self.pzExplain.setFont(QFont("여기어때 잘난체 OTF", 8))
+        # self.pzExplain.setStyleSheet("Color : gray")
 
         self.cartAddBtn = QPushButton("카트 담기", self)
         self.cartAddBtn.resize(200, 100)
-        self.cartAddBtn.move(400, 600)
-
-        self.backBtn = QPushButton("뒤로가기", self)
-        self.backBtn.resize(200, 100)
-        self.backBtn.move(200, 600)
-
+        self.cartAddBtn.move(550, 825)
         self.cartAddBtn.clicked.connect(self.clickCart)
+
+        self.backBtn = QPushButton("뒤로가기 ", self)
+        self.backBtn.resize(200, 100)
+        self.backBtn.move(300, 825)
+
+        self.goOrder = QPushButton("주문 화면", self)
+        self.goOrder.resize(200, 100)
+        self.goOrder.move(50, 825)
+
+        self.topping = QLabel("토핑 추가", self)
+        self.topping.move(420, 540)
+        self.topping.setFont(QFont("여기어때 잘난체 OTF", 15))
+
+        self.amLabel = QLabel("추가 메인 선택",self)
+        self.amLabel.move(420, 580)
+        self.amLabel.setFont(QFont("여기어때 잘난체 OTF", 11))
+
+        self.am = QComboBox(self)
+        self.am.addItem('x')
+        self.am.addItem('발사믹 버섯')
+        self.am.addItem('카라멜라이즈 어니언')
+        self.am.addItem('베이컨 8개/24g')
+        self.am.addItem('감자 8개/24g')
+        self.am.addItem('올리브 20g')
+        self.am.addItem('파인애플 8개/40g')
+        self.am.move(550, 580)
+        self.am.activated[str].connect(self.mainSelect)
+
+
+        self.acLabel = QLabel("추가 치즈 선택", self)
+        self.acLabel.move(420, 610)
+        self.acLabel.setFont(QFont("여기어때 잘난체 OTF", 11))
+
+        self.ac = QComboBox(self)
+        self.ac.addItem('x')
+        self.ac.addItem('도미노 치즈 100g')
+        self.ac.addItem('리코타 치즈 30g')
+        self.ac.addItem('프로볼로네 치즈 20g')
+        self.ac.addItem('카망베르 크림치즈 20g')
+        self.ac.move(550, 610)
+
+        self.ac.activated[str].connect(self.cheeseSelect)
+
+        self.aaLabel = QLabel("추가 애프터 선택", self)
+        self.aaLabel.move(420, 640)
+        self.aaLabel.setFont(QFont("여기어때 잘난체 OTF", 11))
+
+        self.aa = QComboBox(self)
+        self.aa.addItem('x')
+        self.aa.addItem('콰트로 치즈 퐁듀 20g')
+        self.aa.addItem('파르메산 치즈 5g')
+        self.aa.move(570, 640)
+
+        self.aa.activated[str].connect(self.afterSelect)
 
     def clickCart(self):
         if self.sizeTxt.text() == "사이즈 선택":
@@ -1580,11 +1657,11 @@ class AboutWidget(QWidget):
         else:
             option = QMessageBox.question(self, "카트", "카트에 담으시겠습니까?",
                                                     QMessageBox.No | QMessageBox.Yes , QMessageBox.Yes)
-            if option == QMessageBox.Yes:  # 버튼의 이름을 넣으면 됩니다.
+            if option == QMessageBox.Yes:
                 QMessageBox.information(self, "카트", "카트에 담겼습니다!")
                 with open("nowPizzaCart.txt", mode="a") as file:
-                    file.write(self.pzName.text()+"\t"+str(self.pizzaAmount)+"\t"+str(self.resultPrice)+"\t"+ self.doughTxt.text()+"\t"+self.sizeFlag+"\n")
-                    print(self.pzName.text(),self.pizzaAmount,str(self.resultPrice),self.doughTxt.text(),self.sizeFlag)
+                    file.write(self.pzName.text()+"\t"+str(self.pizzaAmount)+"\t"+str(self.resultPrice)+"\t"+ self.doughTxt.text()+"\t"+self.sizeFlag+"\t"+self.am.currentText()+"\t"+self.ac.currentText()+"\t"+self.aa.currentText()+"\n")
+                    print(self.pzName.text(),self.pizzaAmount,str(self.resultPrice),self.doughTxt.text(),self.sizeFlag,self.am.currentText(),self.ac.currentText(),self.aa.currentText())
 
     def value_changed(self):
         self.pzAmountLabel.setText(str(self.spinbox.value()))
@@ -1609,7 +1686,56 @@ class AboutWidget(QWidget):
         elif text == '오리지널 도우(더블 치즈엣지)':
             self.doughPrice += 5000
 
-        self.pizzaPrice = (self.doughPrice + self.sizePrice)
+        self.pizzaPrice = (self.doughPrice + self.sizePrice)+ self.mainPrice + self.cheesePrice + self.afterPrice
+        self.resultPrice = self.pizzaPrice * self.pizzaAmount
+        self.txtPrice.setText(str(self.resultPrice))
+        self.txtPrice.adjustSize()
+        print(self.resultPrice)
+
+    def mainSelect(self, text):
+
+        self.mainPrice = 0
+
+        if text == 'x':
+            self.mainPrice += 0
+        elif text == '올리브 20g' or text == '파인애플 8개/40g':
+            self.mainPrice += 300
+        else:
+            self.mainPrice += 1000
+
+        self.pizzaPrice = (self.doughPrice + self.sizePrice) + self.mainPrice+ self.cheesePrice + self.afterPrice
+        self.resultPrice = self.pizzaPrice * self.pizzaAmount
+        self.txtPrice.setText(str(self.resultPrice))
+        self.txtPrice.adjustSize()
+        print(self.resultPrice)
+
+    def cheeseSelect(self, text):
+
+        self.cheesePrice = 0
+
+        if text == 'x':
+            self.cheesePrice += 0
+        elif text == '도미노 치즈 100g' or text == '리코타 치즈 30g':
+            self.cheesePrice += 2500
+        elif text == '프로볼로네 치즈 20g' or text == '카망베르 크림치즈 20g':
+            self.cheesePrice += 1000
+
+        self.pizzaPrice = (self.doughPrice + self.sizePrice) + self.mainPrice + self.cheesePrice + self.afterPrice
+        self.resultPrice = self.pizzaPrice * self.pizzaAmount
+        self.txtPrice.setText(str(self.resultPrice))
+        self.txtPrice.adjustSize()
+        print(self.resultPrice)
+
+    def afterSelect(self, text):
+
+        self.afterPrice = 0
+
+        if text == 'x':
+            self.afterPrice += 0
+        else:
+            self.afterPrice +=1000
+
+        self.pizzaPrice = (self.doughPrice + self.sizePrice) + self.mainPrice + self.cheesePrice + self.afterPrice
         self.resultPrice = self.pizzaPrice * self.pizzaAmount
         self.txtPrice.setText(str(self.resultPrice))
         self.txtPrice.adjustSize()
@@ -1627,7 +1753,7 @@ class AboutWidget(QWidget):
             self.sizePrice += self.sizeM
             self.sizeFlag = self.flagM
 
-        self.pizzaPrice = (self.doughPrice + self.sizePrice)
+        self.pizzaPrice = (self.doughPrice + self.sizePrice)+ self.mainPrice + self.cheesePrice + self.afterPrice
         self.resultPrice = self.pizzaPrice * self.pizzaAmount
         self.txtPrice.setText(str(self.resultPrice))
         self.txtPrice.adjustSize()
@@ -2516,6 +2642,7 @@ class SubAboutWidget(QWidget):
         self.putBtn = QPushButton("카트담기", self)
         self.putBtn.resize(100, 50)
         self.putBtn.move(650, 650)
+        self.putBtn.clicked.connect(self.clickCart)
 
         self.backBtn = QPushButton("뒤로가기", self)
         self.backBtn.resize(200, 100)

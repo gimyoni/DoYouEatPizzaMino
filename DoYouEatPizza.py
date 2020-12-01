@@ -509,7 +509,7 @@ class OrderWidget(QWidget):
 
         self.myCartLabel.move(50, 400)
         self.myCartInfo.move(50, 420)
-        self.allPrice.move(50, 700)
+        self.allPrice.move(50, 850)
 
         self.delBtn = QPushButton("X", self)
         self.delBtn.resize(50, 50)
@@ -518,16 +518,21 @@ class OrderWidget(QWidget):
         self.delBtn.clicked.connect(self.clickDel)
 
         self.cartPrice = 0
-        self.showCart()
 
         self.lb = QLabel(self)
 
         self.cb = QComboBox(self)
         self.cb.move(500, 300)
 
+        self.cartField = QTextBrowser(self)
+        self.cartField.append("안녕")
+        self.cartField.resize(400,300)
+        self.cartField.move(50, 450)
+        self.cartField.setLineWrapMode(QTextBrowser.NoWrap)
+        self.cartField.verticalScrollBar().setValue(0)
 
+        self.showCart()
         self.makeCombo()
-
 
     def makeCombo(self):
         menu = ""
@@ -576,7 +581,7 @@ class OrderWidget(QWidget):
                         self.cartPrice += int(price)
                         f.write(line)
                         print(line)
-                        self.myCartInfo.setText(self.myCartInfo.text()+name+" "+ str(amount)+"개 "+str(price)+"원\n"+dough+"/ 사이즈 :"+size)
+                        self.cartField.append(name+" "+ str(amount)+"개 "+str(price)+"원\n"+dough+"/ 사이즈 :"+size)
 
 
             with open("nowSubCart.txt", "r") as f:
@@ -593,8 +598,7 @@ class OrderWidget(QWidget):
                         self.cartPrice += int(price)
                         f.write(line)
                         print(line)
-                        self.myCartInfo.setText(
-                            self.myCartInfo.text() + name + " " + str(amount) + "개 " + str(price) + "원\n")
+                        self.cartField.append(name + " " + str(amount) + "개 " + str(price) + "원\n")
                         print(self.cartPrice)
 
             self.allPrice.setText("총 금액 " + str(self.cartPrice))
@@ -603,7 +607,6 @@ class OrderWidget(QWidget):
 
     def showCart(self):
         count = 0
-        self.text = QTextBrowser(self)
 
         with open('nowPizzaCart.txt') as file:
             for line in file.readlines():
@@ -617,7 +620,7 @@ class OrderWidget(QWidget):
 
                 count += int(result[1])
                 self.cartPrice += int(price)
-                self.myCartInfo.setText(self.myCartInfo.text()+name+" "+ str(amount)+"개 "+str(price)+"원\n"+dough+", 사이즈 :"+size)
+                self.cartField.append(name+" "+ str(amount)+"개 "+str(price)+"원\n"+dough+", 사이즈 :"+size)
 
 
 
@@ -628,7 +631,7 @@ class OrderWidget(QWidget):
                 amount = result[1]
                 price = result[2]
                 self.cartPrice += int(price)
-                self.myCartInfo.setText(self.myCartInfo.text() + name+" "+ str(amount)+"개 "+str(price)+"원\n")
+                self.cartField.append(name+" "+ str(amount)+"개 "+str(price)+"원\n")
 
         self.allPrice.setText("총 금액 "+str(self.cartPrice))
 

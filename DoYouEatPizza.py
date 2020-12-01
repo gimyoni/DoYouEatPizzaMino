@@ -1,4 +1,6 @@
 import sys
+from builtins import print
+
 import pandas as pd
 import self as self
 import matplotlib.pyplot as plt
@@ -58,12 +60,15 @@ class MainWindow(QMainWindow):
 
         self.date = QDate.currentDate()
 
+
         self.central_widget = QStackedWidget()
         self.setCentralWidget(self.central_widget)
 
         start_widget = StartWidget(self)
         start_widget.adv.clicked.connect(self.clickAdv)
         self.central_widget.addWidget(start_widget)
+        open('nowPizzaCart.txt', 'w').close()
+        open('nowSubCart.txt', 'w').close()
 
         self.setWindowTitle('PizzaKiosk')
         self.setWindowIcon(QIcon('images/dominoLogo.png'))
@@ -82,9 +87,6 @@ class MainWindow(QMainWindow):
         order_widget.subBtn.clicked.connect(self.clickSub)
         order_widget.buyBtn.clicked.connect(self.clickBuy)
 
-        open('nowPizzaCart.txt', 'w').close()
-        open('nowSubCart.txt', 'w').close()
-
         self.central_widget.addWidget(order_widget)
         self.central_widget.setCurrentWidget(order_widget)
 
@@ -98,27 +100,6 @@ class MainWindow(QMainWindow):
         self.central_widget.addWidget(fame_widget)
         self.central_widget.setCurrentWidget(fame_widget)
 
-    def clickSub(self):
-        sub_widget = SubWidget(self)
-        sub_widget.sidedishBtn.clicked.connect(self.clickSub_side)
-        sub_widget.drinkBtn.clicked.connect(self.clickSub_drink)
-        sub_widget.etcBtn.clicked.connect(self.clickSub_etc)
-
-        sub_widget.rec1Btn.clicked.connect(
-            lambda img_name="tomato_pasta", name="셰프’s 토마토 파스타", price=9800, menu="sidedish": self.click_menu2(img_name,
-                                                                                                              name,
-                                                                                                              price,
-                                                                                                              menu))
-        sub_widget.rec2Btn.clicked.connect(
-            lambda img_name="basil_pasta", name="셰프’s 트러플 바질 파스타", price=9800, menu="sidedish": self.click_menu2(
-                img_name, name, price, menu))
-        sub_widget.rec3Btn.clicked.connect(
-            lambda img_name="rose_pasta", name="스파이시 씨푸드 로제 파스타", price=8800, menu="sidedish": self.click_menu2(img_name,
-                                                                                                               name,
-                                                                                                               price,menu))
-
-        self.central_widget.addWidget(sub_widget)
-        self.central_widget.setCurrentWidget(sub_widget)
 
     def clickRec1(self):
 
@@ -292,20 +273,25 @@ class MainWindow(QMainWindow):
         self.central_widget.addWidget(cla1_widget)
         self.central_widget.setCurrentWidget(cla1_widget)
 
-
     def clickSub(self):
         sub_widget = SubWidget(self)
         sub_widget.sidedishBtn.clicked.connect(self.clickSub_side)
         sub_widget.drinkBtn.clicked.connect(self.clickSub_drink)
         sub_widget.etcBtn.clicked.connect(self.clickSub_etc)
-        sub_widget.orderBtn.clicked.connect(self.click_back)
 
         sub_widget.rec1Btn.clicked.connect(
-            lambda img_name="tomato_pasta", name="셰프’s 토마토 파스타", price=9800: self.click_subMenu(img_name, name, price))
+            lambda img_name="tomato_pasta", name="셰프’s 토마토 파스타", price=9800, menu="sidedish": self.click_menu2(img_name,
+                                                                                                               name,
+                                                                                                               price,
+                                                                                                               menu))
         sub_widget.rec2Btn.clicked.connect(
-            lambda img_name="basil_pasta", name="셰프’s 트러플 바질 파스타", price=9800: self.click_subMenu(img_name, name, price))
+            lambda img_name="basil_pasta", name="셰프’s 트러플 바질 파스타", price=9800, menu="sidedish": self.click_menu2(
+                img_name, name, price, menu))
         sub_widget.rec3Btn.clicked.connect(
-            lambda img_name="rose_pasta", name="스파이시 씨푸드 로제 파스타", price=8800: self.click_subMenu(img_name, name, price))
+            lambda img_name="rose_pasta", name="스파이시 씨푸드 로제 파스타", price=8800, menu="sidedish": self.click_menu2(
+                img_name,
+                name,
+                price, menu))
 
         self.central_widget.addWidget(sub_widget)
         self.central_widget.setCurrentWidget(sub_widget)
@@ -316,122 +302,36 @@ class MainWindow(QMainWindow):
         rec_widget.sidedishBtn.clicked.connect(self.clickSub_side)
         rec_widget.drinkBtn.clicked.connect(self.clickSub_drink)
         rec_widget.etcBtn.clicked.connect(self.clickSub_etc)
-        rec_widget.orderBtn.clicked.connect(self.click_back)
 
         rec_widget.rec1Btn.clicked.connect(
-            lambda img_name="tomato_pasta", name="셰프’s 토마토 파스타", price=9800: self.click_subMenu(img_name, name, price))
-        rec_widget.rec2Btn.clicked.connect(
-            lambda img_name="basil_pasta", name="셰프’s 트러플 바질 파스타", price=9800: self.click_subMenu(img_name, name, price))
-        rec_widget.rec3Btn.clicked.connect(
-            lambda img_name="rose_pasta", name="스파이시 씨푸드 로제 파스타", price=8800: self.click_subMenu(img_name, name, price))
-        rec_widget.rec4Btn.clicked.connect(
-            lambda img_name="crispy_chicken", name="크리스피 핫 순살 치킨(8조각)", price=4800: self.click_subMenu(img_name, name,
-                                                                                                    price))
-        rec_widget.rec5Btn.clicked.connect(
-            lambda img_name="salad", name="샐러드 가든", price=6800: self.click_subMenu(img_name, name, price))
-        rec_widget.rec6Btn.clicked.connect(
-            lambda img_name="penne_pasta", name="펜네 파스타", price=8800: self.click_subMenu(img_name, name, price))
-
-        rec_widget.nextBtn.clicked.connect(self.clickSub_side_next)
-
-        self.central_widget.addWidget(rec_widget)
-        self.central_widget.setCurrentWidget(rec_widget)
-
-    def clickSub_side_next(self):
-        rec_widget = Sub_SideWidget2(self)
-        rec_widget.recommendBtn.clicked.connect(self.clickSub)
-        rec_widget.sidedishBtn.clicked.connect(self.clickSub_side)
-        rec_widget.drinkBtn.clicked.connect(self.clickSub_drink)
-        rec_widget.etcBtn.clicked.connect(self.clickSub_etc)
-
-        rec_widget.rec1Btn.clicked.connect(
-            lambda img_name="grain_chicken", name="슈퍼곡물 치킨(10조각)", price=7800: self.click_subMenu(img_name, name, price))
-        rec_widget.rec2Btn.clicked.connect(
-            lambda img_name="bolognese_spaghetti", name="NEW 치즈 볼로네즈 스파게티", price=8800: self.click_subMenu(img_name, name,
-                                                                                                        price))
-        rec_widget.rec3Btn.clicked.connect(
-            lambda img_name="truffle_risotto", name="트러플 리조또", price=8800: self.click_subMenu(img_name, name, price))
-        rec_widget.rec4Btn.clicked.connect(
-            lambda img_name="half_spaghetti", name="하프&하프 스파게티 (NEW 치즈 & 화이트 크림)", price=9800: self.click_subMenu(img_name,
-                                                                                                               name, price))
-        rec_widget.rec5Btn.clicked.connect(
-            lambda img_name="cream_spaghetti", name="화이트 크림 스파게티", price=8800: self.click_subMenu(img_name, name, price))
-        rec_widget.rec6Btn.clicked.connect(
-            lambda img_name="wings", name="갈릭&허브윙스(8조각)", price=8800: self.click_subMenu(img_name, name, price))
-
-        rec_widget.prevBtn.clicked.connect(self.clickSub_side)
-
-        self.central_widget.addWidget(rec_widget)
-        self.central_widget.setCurrentWidget(rec_widget)
-
-    def clickSub_drink(self):
-        rec_widget = Sub_DrinkWidget(self)
-        rec_widget.recommendBtn.clicked.connect(self.clickSub)
-        rec_widget.sidedishBtn.clicked.connect(self.clickSub_side)
-        rec_widget.drinkBtn.clicked.connect(self.clickSub_drink)
-        rec_widget.etcBtn.clicked.connect(self.clickSub_etc)
-
-        self.central_widget.addWidget(rec_widget)
-        self.central_widget.setCurrentWidget(rec_widget)
-
-    def clickSub_etc(self):
-        rec_widget = Sub_EtcWidget(self)
-        rec_widget.recommendBtn.clicked.connect(self.clickSub)
-        rec_widget.sidedishBtn.clicked.connect(self.clickSub_side)
-        rec_widget.drinkBtn.clicked.connect(self.clickSub_drink)
-        rec_widget.etcBtn.clicked.connect(self.clickSub_etc)
-
-        self.central_widget.addWidget(rec_widget)
-        self.central_widget.setCurrentWidget(rec_widget)
-
-
-    def click_subMenu(self, img_name, name, price):
-        about_widget = SubAboutWidget(self)
-        about_widget.test(img_name, name, price)
-        about_widget.backBtn.clicked.connect(self.click_back)
-
-        self.central_widget.addWidget(about_widget)
-        self.central_widget.setCurrentWidget(about_widget)
-
-
-    def clickSub_side(self):
-        rec_widget = Sub_SideWidget1(self)
-        rec_widget.recommendBtn.clicked.connect(self.clickSub)
-        rec_widget.sidedishBtn.clicked.connect(self.clickSub_side)
-        rec_widget.drinkBtn.clicked.connect(self.clickSub_drink)
-        rec_widget.etcBtn.clicked.connect(self.clickSub_etc)
-
-        rec_widget.rec1Btn.clicked.connect(
-            lambda img_name="tomato_pasta", name="셰프’s 토마토 파스타", price=9800, menu="sidedish": self.click_menu2(img_name,name,price,menu))
+            lambda img_name="tomato_pasta", name="셰프’s 토마토 파스타", price=9800, menu="sidedish": self.click_menu2(img_name,
+                                                                                                               name,
+                                                                                                               price,
+                                                                                                               menu))
         rec_widget.rec2Btn.clicked.connect(
             lambda img_name="basil_pasta", name="셰프’s 트러플 바질 파스타", price=9800, menu="sidedish": self.click_menu2(
                 img_name, name, price, menu))
         rec_widget.rec3Btn.clicked.connect(
-            lambda img_name="rose_pasta", name="스파이시 씨푸드 로제 파스타", price=8800, menu="sidedish": self.click_menu2(img_name,
-                                                                                                               name,
-                                                                                                               price,
-                                                                                                               menu))
+            lambda img_name="rose_pasta", name="스파이시 씨푸드 로제 파스타", price=8800, menu="sidedish": self.click_menu2(
+                img_name,
+                name,
+                price,
+                menu))
         rec_widget.rec4Btn.clicked.connect(
             lambda img_name="crispy_chicken", name="크리스피 핫 순살 치킨(8조각)", price=4800, menu="sidedish": self.click_menu2(
                 img_name, name,
                 price, menu))
         rec_widget.rec5Btn.clicked.connect(
             lambda img_name="salad", name="샐러드 가든", price=6800, menu="sidedish": self.click_menu2(img_name, name, price,
-                                                                                                 menu))
+                                                                                                  menu))
         rec_widget.rec6Btn.clicked.connect(
             lambda img_name="penne_pasta", name="펜네 파스타", price=8800, menu="sidedish": self.click_menu2(img_name, name,
-                                                                                                       price, menu))
+                                                                                                        price, menu))
 
         rec_widget.nextBtn.clicked.connect(self.clickSub_side_next)
 
         self.central_widget.addWidget(rec_widget)
         self.central_widget.setCurrentWidget(rec_widget)
-
-    def click_menu2(self, img_name, name, price, menu):
-        about_widget = SubAboutWidget(self)
-        about_widget.test(img_name, name, price, menu)
-        self.central_widget.addWidget(about_widget)
-        self.central_widget.setCurrentWidget(about_widget)
 
     def clickSub_side_next(self):
         rec_widget = Sub_SideWidget2(self)
@@ -446,22 +346,23 @@ class MainWindow(QMainWindow):
         rec_widget.rec2Btn.clicked.connect(
             lambda img_name="bolognese_spaghetti", name="NEW 치즈 볼로네즈 스파게티", price=8800,
                    menu="sidedish": self.click_menu2(img_name, name,
-                                                    price, menu))
+                                                     price, menu))
         rec_widget.rec3Btn.clicked.connect(
             lambda img_name="truffle_risotto", name="트러플 리조또", price=8800, menu="sidedish": self.click_menu2(img_name,
-                                                                                                            name, price,
-                                                                                                            menu))
+                                                                                                             name,
+                                                                                                             price,
+                                                                                                             menu))
         rec_widget.rec4Btn.clicked.connect(
             lambda img_name="half_spaghetti", name="하프&하프 스파게티 (NEW 치즈 & 화이트 크림)", price=9800,
                    menu="sidedish": self.click_menu2(img_name,
-                                                    name,
-                                                    price, menu))
+                                                     name,
+                                                     price, menu))
         rec_widget.rec5Btn.clicked.connect(
             lambda img_name="cream_spaghetti", name="화이트 크림 스파게티", price=8800, menu="sidedish": self.click_menu2(
                 img_name, name, price, menu))
         rec_widget.rec6Btn.clicked.connect(
             lambda img_name="wings", name="갈릭&허브윙스(8조각)", price=8800, menu="sidedish": self.click_menu2(img_name, name,
-                                                                                                       price, menu))
+                                                                                                        price, menu))
 
         rec_widget.prevBtn.clicked.connect(self.clickSub_side)
 
@@ -528,6 +429,22 @@ class MainWindow(QMainWindow):
         self.central_widget.addWidget(rec_widget)
         self.central_widget.setCurrentWidget(rec_widget)
 
+    def click_subMenu(self, img_name, name, price):
+        about_widget = SubAboutWidget(self)
+        about_widget.test(img_name, name, price)
+        about_widget.backBtn.clicked.connect(self.click_back)
+
+        self.central_widget.addWidget(about_widget)
+        self.central_widget.setCurrentWidget(about_widget)
+
+    def click_menu2(self, img_name, name, price, menu):
+        about_widget = SubAboutWidget(self)
+        about_widget.test(img_name, name, price, menu)
+        about_widget.backBtn.clicked.connect(self.click_back)
+
+        self.central_widget.addWidget(about_widget)
+        self.central_widget.setCurrentWidget(about_widget)
+
 
 
 
@@ -585,7 +502,7 @@ class OrderWidget(QWidget):
         self.buyBtn.move(500, 800)
         #self.buyBtn.clicked.connect(self.clickCart)
 
-        self.myCartLabel = QLabel("---------장바구니----------", self)
+        self.myCartLabel = QLabel("--------- 장바구니 ----------", self)
         self.myCartInfo = QLabel("", self)
         self.allPrice = QLabel("", self)
 
@@ -597,47 +514,34 @@ class OrderWidget(QWidget):
         self.myCartInfo.move(50, 420)
         self.allPrice.move(50, 700)
 
+        self.delBtn = QPushButton("X", self)
+        self.delBtn.resize(50, 50)
+        self.delBtn.move(500, 400)
+
+        self.delBtn.clicked.connect(self.clickDel)
+
         self.cartPrice = 0
         self.showCart()
 
+        self.lb = QLabel(self)
 
-    # def clickCart(self):
-    #     count = 0
-    #     option = QMessageBox.question(self, "구매", "구매하시겠습니까?",
-    #                                       QMessageBox.No | QMessageBox.Yes, QMessageBox.Yes)
-    #     if option == QMessageBox.Yes:
-    #
-    #         with open('nowPizzaCart.txt') as file:
-    #             for line in file.readlines():
-    #                 result = line.strip().split('\t')
-    #                 name = result[0]
-    #                 amount = result[1]
-    #                 price = result[2]
-    #                 count += int(result[1])
-    #                 addTemData(name, amount, price)
-    #         #open('nowPizzaCart.txt', 'w').close()
-    #
-    #         with open('nowSubCart.txt') as file:
-    #             for line in file.readlines():
-    #                 result = line.strip().split('\t')
-    #                 name = result[0]
-    #                 amount = result[1]
-    #                 price = result[2]
-    #                 #self.myCartInfo.setText(
-    #         #open('nowSubCart.txt', 'w').close()
+        self.cb = QComboBox(self)
+        self.cb.move(500, 300)
 
-    def showCart(self):
-        count = 0
+        self.makeCombo()
 
+
+    def makeCombo(self):
+        menu = ""
+        self.cb.addItem("삭제할 메뉴를 선택해주세요.")
         with open('nowPizzaCart.txt') as file:
             for line in file.readlines():
                 result = line.strip().split('\t')
                 name = result[0]
                 amount = result[1]
                 price = result[2]
-                count += int(result[1])
-                self.cartPrice += int(price)
-                self.myCartInfo.setText(self.myCartInfo.text()+name+" "+ str(amount)+"개 "+str(price)+"원\n")
+                menu = name+" "+price
+                self.cb.addItem(menu)
 
         with open('nowSubCart.txt') as file:
             for line in file.readlines():
@@ -645,8 +549,80 @@ class OrderWidget(QWidget):
                 name = result[0]
                 amount = result[1]
                 price = result[2]
+                menu = name + " " + price
+                self.cb.addItem(menu)
+
+        self.cb.currentTextChanged.connect(self.lb.setText)
+
+
+    def clickDel(self):
+        option = QMessageBox.warning(self, "삭제", "메뉴를 삭제하시겠습니까?", QMessageBox.No | QMessageBox.Yes, QMessageBox.Yes)
+        if option == QMessageBox.Yes:
+
+            menu = ""
+            self.myCartInfo.setText("")
+            self.cartPrice = 0
+            with open("nowPizzaCart.txt", "r") as f:
+                lines = f.readlines()
+
+            with open("nowPizzaCart.txt", "w") as f:
+                for line in lines:
+                    result = line.strip().split('\t')
+                    name = result[0]
+                    amount = result[1]
+                    price = result[2]
+                    menu = name + " " + price
+                    print("지워지는 메뉴 : "+menu)
+                    print("이메뉴 아니면 괜찮음 : "+self.lb.text())
+                    if menu != self.lb.text():
+                        print("이메뉴는 살아남음 : " + self.lb.text())
+
+                        print("+"+price)
+                        self.cartPrice += int(price)
+                        f.write(line)
+                        print(line)
+                        self.myCartInfo.setText(
+                            self.myCartInfo.text() + name + " " + str(amount) + "개 " + str(price) + "원\n")
+                        print(self.cartPrice)
+                    else:
+                        print("실행됨")
+                        print("이메뉴는 죽었음 : " + self.lb.text())
+
+            self.allPrice.setText("총 금액 " + str(self.cartPrice))
+            print(str(self.cartPrice))
+            self.cb.removeItem(self.cb.currentIndex())
+
+    def showCart(self):
+        count = 0
+
+        with open('nowPizzaCart.txt') as file:
+            for line in file.readlines():
+                result = line.strip().split('\t')
+                print(result)
+                name = result[0]
+                amount = result[1]
+                price = result[2]
+                dough = result[3]
+                size = result[4]
+
+                count += int(result[1])
+                self.cartPrice += int(price)
+                self.myCartInfo.setText(self.myCartInfo.text()+name+" "+ str(amount)+"개 "+str(price)+"원\n")
+
+
+        with open('nowSubCart.txt') as file:
+            for line in file.readlines():
+                result = line.strip().split('\t')
+                name = result[0]
+                amount = result[1]
+                price = result[2]
+                dough = result[3]
+                size = result[4]
                 self.cartPrice += int(price)
                 self.myCartInfo.setText(self.myCartInfo.text() + name+" "+ str(amount)+"개 "+str(price)+"원\n")
+
+
+
 
         self.allPrice.setText("총 금액 "+str(self.cartPrice))
 
@@ -680,7 +656,10 @@ class BuyWidget(QWidget):
                 name = result[0]
                 amount = result[1]
                 price = result[2]
+                dough = result[3]
+                size = result[4]
                 count += int(result[1])
+
                 self.cartPrice += int(price)
                 self.myCartInfo.setText(self.myCartInfo.text() + name + " " + str(amount) + "개 " + str(price) + "원\n")
         open('nowPizzaCart.txt', 'w').close()
@@ -690,6 +669,9 @@ class BuyWidget(QWidget):
                 name = result[0]
                 amount = result[1]
                 price = result[2]
+                dough = result[3]
+                size = result[4]
+
                 self.cartPrice += int(price)
                 self.myCartInfo.setText(self.myCartInfo.text() + name + " " + str(amount) + "개 " + str(price) + "원\n")
         open('nowSubCart.txt', 'w').close()
@@ -1531,6 +1513,9 @@ class AboutWidget(QWidget):
         self.sizeLarge= 'L '+str(self.sizeL)+"원"
         self.sizeMid = 'M ' + str(self.sizeM) + "원"
 
+        self.flagL = 'L'
+        self.flagM = 'M'
+
         dSize = QComboBox(self)
         dSize.addItem('사이즈 선택')
         dSize.addItem(self.sizeLarge)
@@ -1545,6 +1530,7 @@ class AboutWidget(QWidget):
         self.doughTxt.setFont(QFont("여기어때 잘난체 OTF", 15))
 
         cb = QComboBox(self)
+        cb.addItem('도우 선택')
         cb.addItem('오리지널 도우(기본)')
         cb.addItem('나폴리 도우')
         cb.addItem('씬 도우(기본 갈릭디핑 소스 미제공')
@@ -1589,14 +1575,16 @@ class AboutWidget(QWidget):
     def clickCart(self):
         if self.sizeTxt.text() == "사이즈 선택":
             QMessageBox.critical(self, "QMessageBox", "사이즈를 선택해주세요")
+        elif self.doughTxt.text() == "도우 선택":
+            QMessageBox.critical(self, "QMessageBox", "도우를 선택해주세요")
         else:
             option = QMessageBox.question(self, "카트", "카트에 담으시겠습니까?",
                                                     QMessageBox.No | QMessageBox.Yes , QMessageBox.Yes)
             if option == QMessageBox.Yes:  # 버튼의 이름을 넣으면 됩니다.
                 QMessageBox.information(self, "카트", "카트에 담겼습니다!")
                 with open("nowPizzaCart.txt", mode="a") as file:
-                    file.write(self.pzName.text()+"\t"+str(self.pizzaAmount)+"\t"+str(self.resultPrice)+"\n")
-                    print(self.pzName.text(),self.pizzaAmount,self.pizzaPrice)
+                    file.write(self.pzName.text()+"\t"+str(self.pizzaAmount)+"\t"+str(self.resultPrice)+"\t"+ self.doughTxt.text()+"\t"+self.sizeFlag+"\n")
+                    print(self.pzName.text(),self.pizzaAmount,str(self.resultPrice),self.doughTxt.text(),self.sizeFlag)
 
     def value_changed(self):
         self.pzAmountLabel.setText(str(self.spinbox.value()))
@@ -1634,8 +1622,10 @@ class AboutWidget(QWidget):
         self.sizePrice = 0
         if text == self.sizeLarge:
             self.sizePrice += self.sizeL
+            self.sizeFlag = self.flagL
         elif text == self.sizeMid:
             self.sizePrice += self.sizeM
+            self.sizeFlag = self.flagM
 
         self.pizzaPrice = (self.doughPrice + self.sizePrice)
         self.resultPrice = self.pizzaPrice * self.pizzaAmount
@@ -2527,6 +2517,10 @@ class SubAboutWidget(QWidget):
         self.putBtn.resize(100, 50)
         self.putBtn.move(650, 650)
 
+        self.backBtn = QPushButton("뒤로가기", self)
+        self.backBtn.resize(200, 100)
+        self.backBtn.move(200, 600)
+
     def setPrice(self):
         self.pzPrice.setText(str(self.num_spin.value() * self.price))
         self.pzPrice.resize(self.pzPrice.sizeHint())
@@ -2534,42 +2528,7 @@ class SubAboutWidget(QWidget):
         pixmap = QPixmap("images/toppingBack.png")
         self.famePz.setPixmap(QPixmap(pixmap))
 
-    def test(self, img_name, name, price):
-        self.price = price
 
-        self.pz1 = QLabel(self)
-        self.pz1.setPixmap(QPixmap("images/sidedish/" + img_name + ".jpg"))
-        self.pz1.setScaledContents(True)
-        self.pz1.setGeometry(QRect(50, 300, 300, 300))
-
-        self.pzName = QLabel(self)
-        self.pzName.setText(name)
-        self.pzName.move(50, 250)
-        self.pzName.setFont(QFont("여기어때 잘난체", 20))
-
-        self.num_lbl = QLabel('수량 선택', self)
-        self.num_lbl.move(380, 310)
-        self.num_lbl.setFont(QFont("여기어때 잘난체", 15))
-
-        self.num_spin = QSpinBox(self)
-        self.num_spin.move(650, 310)
-        self.num_spin.setRange(0, 99)
-        self.num_spin.setValue(1)
-        self.num_spin.setSuffix(" 개")
-        self.num_spin.valueChanged.connect(self.setPrice)
-
-        self.pzPrice = QLabel(str(price), self)
-        self.pzPrice.move(380, 650)
-        self.pzPrice.setFont(QFont("여기어때 잘난체", 25))
-
-        self.putBtn = QPushButton("카트담기", self)
-        self.putBtn.resize(100, 50)
-        self.putBtn.move(650, 650)
-        self.putBtn.clicked.connect(self.clickCart)
-
-        self.backBtn = QPushButton("뒤로가기", self)
-        self.backBtn.resize(200, 100)
-        self.backBtn.move(200, 600)
 
     def setPrice(self):
         self.pzPrice.setText(str(self.num_spin.value() * self.price))

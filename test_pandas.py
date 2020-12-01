@@ -26,7 +26,6 @@ def makePlot():
     pizza_data = pd.read_excel("pizzaInfo.xlsx", sheet_name="Sheet3")
     pizzatmp = pizza_data.filter(['메뉴','개수'])
     pizzadf = pizzatmp.groupby(['메뉴']).sum()
-    print(pizzadf)
 
     pizza = DataFrame(pizzadf, columns=['개수'])
     pizza['개수'].plot.pie()

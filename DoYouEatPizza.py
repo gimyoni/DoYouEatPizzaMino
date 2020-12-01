@@ -24,8 +24,8 @@ else:
 
 matplotlib.rcParams['axes.unicode_minus'] = False
 # 그래프에서 마이너스 기호가 표시되도록 하는 설정입니다.
-#pizza_result = pd.read_excel("pizzaInfo.xlsx", sheet_name="Sheet1")
-#pizza_tem = pd.read_excel("pizzaInfo.xlsx", sheet_name="Sheet2")
+# pizza_result = pd.read_excel("pizzaInfo.xlsx", sheet_name="Sheet1")
+# pizza_tem = pd.read_excel("pizzaInfo.xlsx", sheet_name="Sheet2")
 from test_pandas import makePlot
 
 self.df1 = pd.DataFrame.from_records([{'날짜': '2020-11-30', '메뉴': '피자', '개수': 1, '가격': 3500}])
@@ -35,13 +35,12 @@ self.df2 = pd.read_excel("pizzaInfo.xlsx", sheet_name="Sheet3")
 print(self.df2)
 
 
-def addData(date, name,amount, price, dough):
-
-        new_row = {'날짜' : date, '메뉴': name, '개수': amount, '가격': price, '도우':dough}
-        self.df2 = self.df2.append(new_row, ignore_index=True)
-        self.df2.to_excel("pizzaInfo.xlsx", sheet_name='Sheet3', index=False)
-        print()
-        print(self.df2)
+def addData(date, name, amount, price, dough):
+    new_row = {'날짜': date, '메뉴': name, '개수': amount, '가격': price, '도우': dough}
+    self.df2 = self.df2.append(new_row, ignore_index=True)
+    self.df2.to_excel("pizzaInfo.xlsx", sheet_name='Sheet3', index=False)
+    print()
+    print(self.df2)
 
 
 class MainWindow(QMainWindow):
@@ -88,9 +87,7 @@ class MainWindow(QMainWindow):
         self.central_widget.addWidget(fame_widget)
         self.central_widget.setCurrentWidget(fame_widget)
 
-
     def clickRec1(self):
-
         rec_widget = RecWidget_1(self)
         rec_widget.fameBtn.clicked.connect(self.clickFame)
         rec_widget.premiumBtn.clicked.connect(self.clickPre1)
@@ -104,7 +101,6 @@ class MainWindow(QMainWindow):
         self.central_widget.setCurrentWidget(rec_widget)
 
     def clickRec2(self):
-
         rec_widget = RecWidget_2(self)
         rec_widget.fameBtn.clicked.connect(self.clickFame)
         rec_widget.premiumBtn.clicked.connect(self.clickPre1)
@@ -118,7 +114,6 @@ class MainWindow(QMainWindow):
         self.central_widget.setCurrentWidget(rec_widget)
 
     def clickRec3(self):
-
         rec_widget = RecWidget_3(self)
         rec_widget.fameBtn.clicked.connect(self.clickFame)
         rec_widget.premiumBtn.clicked.connect(self.clickPre1)
@@ -132,19 +127,33 @@ class MainWindow(QMainWindow):
         self.central_widget.setCurrentWidget(rec_widget)
 
     def clickPre1(self):
-
         pre1_widget = PreWidget_1(self)
         pre1_widget.fameBtn.clicked.connect(self.clickFame)
         pre1_widget.recommendBtn.clicked.connect(self.clickRec1)
         pre1_widget.classicBtn.clicked.connect(self.clickCla1)
         pre1_widget.orderBtn.clicked.connect(self.click_back)
 
-        pre1_widget.pz1Btn.clicked.connect(lambda img_name="starChefSignature", name="스타 셰프 시그니처", size_l = 36900, size_m = 29900: self.click_menu(img_name, name, size_l, size_m))
-        pre1_widget.pz2Btn.clicked.connect(lambda img_name="starChefTruffleBazil", name="스타 셰프 트러플 바질", size_l = 36900, size_m = 29900: self.click_menu(img_name, name, size_l, size_m))
-        pre1_widget.pz3Btn.clicked.connect(lambda img_name="globalLegend4", name="글로벌 레전드4", size_l = 35900, size_m = 29000: self.click_menu(img_name, name, size_l, size_m))
-        pre1_widget.pz4Btn.clicked.connect(lambda img_name="serialChilliCrab", name="시리얼 칠리크랩", size_l = 34900, size_m = 29000: self.click_menu(img_name, name, size_l, size_m))
-        pre1_widget.pz5Btn.clicked.connect(lambda img_name="cheeseCakeBlackTiger", name="치즈케이크 블랙타이거", size_l = 35900, size_m = 29000: self.click_menu(img_name, name, size_l, size_m))
-        pre1_widget.pz6Btn.clicked.connect(lambda img_name="30CheeseNewYorkStripStake", name="30 치즈&뉴욕 스트립 스테이크", size_l = 34900, size_m = 29000: self.click_menu(img_name, name, size_l, size_m))
+        pre1_widget.pz1Btn.clicked.connect(
+            lambda img_name="starChefSignature", name="스타 셰프 시그니처", size_l=36900, size_m=29900: self.click_menu(
+                img_name, name, size_l, size_m))
+        pre1_widget.pz2Btn.clicked.connect(
+            lambda img_name="starChefTruffleBazil", name="스타 셰프 트러플 바질", size_l=36900, size_m=29900: self.click_menu(
+                img_name, name, size_l, size_m))
+        pre1_widget.pz3Btn.clicked.connect(
+            lambda img_name="globalLegend4", name="글로벌 레전드4", size_l=35900, size_m=29000: self.click_menu(img_name,
+                                                                                                          name, size_l,
+                                                                                                          size_m))
+        pre1_widget.pz4Btn.clicked.connect(
+            lambda img_name="serialChilliCrab", name="시리얼 칠리크랩", size_l=34900, size_m=29000: self.click_menu(img_name,
+                                                                                                             name,
+                                                                                                             size_l,
+                                                                                                             size_m))
+        pre1_widget.pz5Btn.clicked.connect(
+            lambda img_name="cheeseCakeBlackTiger", name="치즈케이크 블랙타이거", size_l=35900, size_m=29000: self.click_menu(
+                img_name, name, size_l, size_m))
+        pre1_widget.pz6Btn.clicked.connect(
+            lambda img_name="30CheeseNewYorkStripStake", name="30 치즈&뉴욕 스트립 스테이크", size_l=34900,
+                   size_m=29000: self.click_menu(img_name, name, size_l, size_m))
 
         pre1_widget.nextBtn.clicked.connect(self.clickPre2)
 
@@ -159,13 +168,19 @@ class MainWindow(QMainWindow):
         pre2_widget.orderBtn.clicked.connect(self.click_back)
 
         pre2_widget.pz1Btn.clicked.connect(
-            lambda img_name="blackAngersStake", name="블랙앵거스 스테이크", size_l = 34900, size_m = 29000, i =0: self.click_menu(img_name, name, size_l, size_m))
+            lambda img_name="blackAngersStake", name="블랙앵거스 스테이크", size_l=34900, size_m=29000, i=0: self.click_menu(
+                img_name, name, size_l, size_m))
         pre2_widget.pz2Btn.clicked.connect(
-            lambda img_name="bestQuattro", name="베스트 콰트로", size_l = 34900, size_m = 29000: self.click_menu(img_name, name, size_l, size_m))
+            lambda img_name="bestQuattro", name="베스트 콰트로", size_l=34900, size_m=29000: self.click_menu(img_name, name,
+                                                                                                       size_l, size_m))
         pre2_widget.pz3Btn.clicked.connect(
-            lambda img_name="blackTigerShrimp", name="블랙타이거 슈림프", size_l = 34900, size_m = 29000: self.click_menu(img_name, name, size_l, size_m))
+            lambda img_name="blackTigerShrimp", name="블랙타이거 슈림프", size_l=34900, size_m=29000: self.click_menu(img_name,
+                                                                                                              name,
+                                                                                                              size_l,
+                                                                                                              size_m))
         pre2_widget.pz4Btn.clicked.connect(
-            lambda img_name="zikhwaStake", name="직화 스테이크", size_l = 33900, size_m = 28000: self.click_menu(img_name, name, size_l, size_m))
+            lambda img_name="zikhwaStake", name="직화 스테이크", size_l=33900, size_m=28000: self.click_menu(img_name, name,
+                                                                                                       size_l, size_m))
 
         pre2_widget.prevBtn.clicked.connect(self.clickPre1)
 
@@ -199,7 +214,6 @@ class MainWindow(QMainWindow):
         self.central_widget.setCurrentWidget(order_widget)
 
     def clickBuy(self):
-
         option = QMessageBox.question(self, "구매", "구매창으로 넘어갑니다",
                                       QMessageBox.No | QMessageBox.Yes, QMessageBox.Yes)
         if option == QMessageBox.Yes:
@@ -231,10 +245,10 @@ class MainWindow(QMainWindow):
                 img_name, name, size_l, size_m))
         cla1_widget.pz3Btn.clicked.connect(
             lambda img_name="ourGoguma", name="우리고구마", size_l=29900, size_m=23000: self.click_menu(
-                img_name,name, size_l,size_m))
+                img_name, name, size_l, size_m))
         cla1_widget.pz4Btn.clicked.connect(
             lambda img_name="potato", name="포테이토", size_l=25900, size_m=19000: self.click_menu(
-                img_name,name,size_l,size_m))
+                img_name, name, size_l, size_m))
         cla1_widget.pz5Btn.clicked.connect(
             lambda img_name="superDelux", name="슈퍼디럭스", size_l=25900, size_m=19000: self.click_menu(
                 img_name, name, size_l, size_m))
@@ -253,7 +267,6 @@ class MainWindow(QMainWindow):
         cla1_widget.recommendBtn.clicked.connect(self.clickRec1)
         cla1_widget.premiumBtn.clicked.connect(self.clickPre1)
         cla1_widget.orderBtn.clicked.connect(self.click_back)
-
 
         cla1_widget.pz1Btn.clicked.connect(
             lambda img_name="bacconCheddarCheese", name="베이컨체더치즈", size_l=36900, size_m=29900: self.click_menu(
@@ -275,6 +288,7 @@ class MainWindow(QMainWindow):
         sub_widget.sidedishBtn.clicked.connect(self.clickSub_side)
         sub_widget.drinkBtn.clicked.connect(self.clickSub_drink)
         sub_widget.etcBtn.clicked.connect(self.clickSub_etc)
+        sub_widget.orderBtn.clicked.connect(self.click_back)
 
         sub_widget.rec1Btn.clicked.connect(
             lambda img_name="tomato_pasta", name="셰프’s 토마토 파스타", price=9800, menu="sidedish": self.click_menu2(img_name,
@@ -299,6 +313,7 @@ class MainWindow(QMainWindow):
         rec_widget.sidedishBtn.clicked.connect(self.clickSub_side)
         rec_widget.drinkBtn.clicked.connect(self.clickSub_drink)
         rec_widget.etcBtn.clicked.connect(self.clickSub_etc)
+        rec_widget.orderBtn.clicked.connect(self.click_back)
 
         rec_widget.rec1Btn.clicked.connect(
             lambda img_name="tomato_pasta", name="셰프’s 토마토 파스타", price=9800, menu="sidedish": self.click_menu2(img_name,
@@ -336,6 +351,7 @@ class MainWindow(QMainWindow):
         rec_widget.sidedishBtn.clicked.connect(self.clickSub_side)
         rec_widget.drinkBtn.clicked.connect(self.clickSub_drink)
         rec_widget.etcBtn.clicked.connect(self.clickSub_etc)
+        rec_widget.orderBtn.clicked.connect(self.click_back)
 
         rec_widget.rec1Btn.clicked.connect(
             lambda img_name="grain_chicken", name="슈퍼곡물 치킨(10조각)", price=7800, menu="sidedish": self.click_menu2(
@@ -372,27 +388,29 @@ class MainWindow(QMainWindow):
         rec_widget.sidedishBtn.clicked.connect(self.clickSub_side)
         rec_widget.drinkBtn.clicked.connect(self.clickSub_drink)
         rec_widget.etcBtn.clicked.connect(self.clickSub_etc)
+        rec_widget.orderBtn.clicked.connect(self.click_back)
 
         rec_widget.rec1Btn.clicked.connect(
             lambda img_name="cola1.25", name="코카콜라 1.25L", price=2000, menu="drink": self.click_menu2(img_name, name,
-                                                                                                     price, menu))
+                                                                                                      price, menu))
         rec_widget.rec2Btn.clicked.connect(
             lambda img_name="cola500", name="코카콜라 500ml", price=1400, menu="drink": self.click_menu2(img_name, name,
-                                                                                                    price, menu))
+                                                                                                     price, menu))
         rec_widget.rec3Btn.clicked.connect(
             lambda img_name="zerocola1.5", name="코카콜라 제로 1.5L", price=2100, menu="drink": self.click_menu2(img_name,
-                                                                                                          name, price,
-                                                                                                          menu))
+                                                                                                           name, price,
+                                                                                                           menu))
         rec_widget.rec4Btn.clicked.connect(
             lambda img_name="zerocola500", name="코카콜라 제로 500ml", price=1300, menu="drink": self.click_menu2(img_name,
-                                                                                                           name,
-                                                                                                           price, menu))
+                                                                                                            name,
+                                                                                                            price,
+                                                                                                            menu))
         rec_widget.rec5Btn.clicked.connect(
             lambda img_name="sprite1.5", name="스프라이트 1.5L", price=2100, menu="drink": self.click_menu2(img_name, name,
-                                                                                                      price, menu))
+                                                                                                       price, menu))
         rec_widget.rec6Btn.clicked.connect(
             lambda img_name="sprite500", name="스프라이트 500ml", price=1300, menu="drink": self.click_menu2(img_name, name,
-                                                                                                       price, menu))
+                                                                                                        price, menu))
 
         self.central_widget.addWidget(rec_widget)
         self.central_widget.setCurrentWidget(rec_widget)
@@ -403,46 +421,37 @@ class MainWindow(QMainWindow):
         rec_widget.sidedishBtn.clicked.connect(self.clickSub_side)
         rec_widget.drinkBtn.clicked.connect(self.clickSub_drink)
         rec_widget.etcBtn.clicked.connect(self.clickSub_etc)
+        rec_widget.orderBtn.clicked.connect(self.click_back)
 
         rec_widget.rec1Btn.clicked.connect(
             lambda img_name="picklel", name="우리 피클 L", price=800, menu="etc": self.click_menu2(img_name, name,
-                                                                                              price, menu))
+                                                                                               price, menu))
         rec_widget.rec2Btn.clicked.connect(
             lambda img_name="picklem", name="우리 피클 M", price=500, menu="etc": self.click_menu2(img_name, name, price,
-                                                                                              menu))
+                                                                                               menu))
         rec_widget.rec3Btn.clicked.connect(
             lambda img_name="cereal", name="도미노 시리얼", price=400, menu="etc": self.click_menu2(img_name, name, price,
-                                                                                             menu))
+                                                                                              menu))
         rec_widget.rec4Btn.clicked.connect(
             lambda img_name="chilisauce", name="스위트 칠리소스 15g", price=300, menu="etc": self.click_menu2(img_name, name,
-                                                                                                      price, menu))
+                                                                                                       price, menu))
         rec_widget.rec5Btn.clicked.connect(
             lambda img_name="garlicsauce", name="갈릭 디핑 소스 15g", price=200, menu="etc": self.click_menu2(img_name, name,
-                                                                                                       price, menu))
+                                                                                                        price, menu))
         rec_widget.rec6Btn.clicked.connect(
             lambda img_name="hotsauce", name="핫소스", price=100, menu="drink": self.click_menu2(img_name, name, price,
-                                                                                             menu))
+                                                                                              menu))
 
         self.central_widget.addWidget(rec_widget)
         self.central_widget.setCurrentWidget(rec_widget)
 
-    def click_subMenu(self, img_name, name, price):
-        about_widget = SubAboutWidget(self)
-        about_widget.test(img_name, name, price)
-        about_widget.backBtn.clicked.connect(self.click_back)
-
-        self.central_widget.addWidget(about_widget)
-        self.central_widget.setCurrentWidget(about_widget)
-
     def click_menu2(self, img_name, name, price, menu):
         about_widget = SubAboutWidget(self)
         about_widget.test(img_name, name, price, menu)
-        about_widget.backBtn.clicked.connect(self.click_back)
+        about_widget.backBtn.clicked.connect(self.clickSub)
 
         self.central_widget.addWidget(about_widget)
         self.central_widget.setCurrentWidget(about_widget)
-
-
 
 
 class StartWidget(QWidget):
@@ -478,73 +487,111 @@ class OrderWidget(QWidget):
 
         self.orderBack = QLabel(self)
         self.orderBack.resize(800, 950)
-        pixmap = QPixmap("images/orderBack.png")
+        pixmap = QPixmap("images/basicBack.png")
         self.orderBack.setPixmap(QPixmap(pixmap))
 
         self.pizzaBtn = QPushButton('피자', self.orderBack)
         self.pizzaBtn.resize(200, 200)
-        self.pizzaBtn.move(50, 200)
+        self.pizzaBtn.move(50, 150)
 
         self.subBtn = QPushButton('서브메뉴 및 콜라', self.orderBack)
         self.subBtn.resize(200, 200)
-        self.subBtn.move(300, 200)
-
+        self.subBtn.move(300, 150)
 
         self.cart = QLabel(self)
         self.cart.move(50, 850)
         self.cart.setFont(QFont("여기어때 잘난체 OTF", 10))
 
         self.buyBtn = QPushButton('구매하기', self.orderBack)
-        self.buyBtn.resize(200, 200)
-        self.buyBtn.move(500, 800)
-        #self.buyBtn.clicked.connect(self.clickCart)
+        self.buyBtn.resize(200, 100)
+        self.buyBtn.move(600, 850)
+        # self.buyBtn.clicked.connect(self.clickCart)
 
-        self.myCartLabel = QLabel("--------- 장바구니 ----------", self)
-        self.myCartInfo = QLabel("", self)
-        self.allPrice = QLabel("", self)
+        self.myPizzaCartLabel = QLabel("----- 피자 장바구니 -----", self)
+        self.mySubCartLabel = QLabel("----- 사이드 장바구니 -----", self)
+        self.allPrice = QLabel("총 가격: ", self)
+        self.pizzaPrice = QLabel("총 피자 가격: ", self)
+        self.sidePrice = QLabel("총 사이드 가격: ", self)
 
-        self.myCartLabel.setFont(QFont("여기어때 잘난체 OTF", 10))
-        self.myCartInfo.setFont(QFont("여기어때 잘난체 OTF", 10))
-        self.allPrice.setFont(QFont("여기어때 잘난체 OTF", 10))
+        self.myPizzaCartLabel.setFont(QFont("여기어때 잘난체 OTF", 10))
+        self.mySubCartLabel.setFont(QFont("여기어때 잘난체 OTF", 10))
+        self.allPrice.setFont(QFont("여기어때 잘난체 OTF", 17))
+        self.pizzaPrice.setFont(QFont("여기어때 잘난체 OTF", 13))
+        self.sidePrice.setFont(QFont("여기어때 잘난체 OTF", 13))
 
-        self.myCartLabel.move(50, 400)
-        self.myCartInfo.move(50, 420)
-        self.allPrice.move(50, 850)
+        self.myPizzaCartLabel.move(50, 430)
+        self.mySubCartLabel.move(50, 580)
+        self.allPrice.move(100, 875)
+        self.pizzaPrice.move(50, 750)
+        self.sidePrice.move(300, 750)
 
-        self.delBtn = QPushButton("X", self)
-        self.delBtn.resize(50, 50)
-        self.delBtn.move(500, 400)
+        self.pz_delBtn = QPushButton("X", self)
+        self.pz_delBtn.resize(50, 50)
+        self.pz_delBtn.move(500, 400)
 
-        self.delBtn.clicked.connect(self.clickDel)
+        self.pz_delBtn.clicked.connect(self.clickPizzaDel)
 
+        self.side_delBtn = QPushButton("X", self)
+        self.side_delBtn.resize(50, 50)
+        self.side_delBtn.move(500, 500)
+
+        self.side_delBtn.clicked.connect(self.clickSideDel)
+
+        self.sPrice =0
+        self.pPrice =0
         self.cartPrice = 0
 
-        self.lb = QLabel(self)
+        self.lb_pz = QLabel(self)
+        self.cb_pz = QComboBox(self)
+        self.cb_pz.move(500, 300)
 
-        self.cb = QComboBox(self)
-        self.cb.move(500, 300)
+        self.lb_side = QLabel(self)
+        self.cb_side = QComboBox(self)
+        self.cb_side.move(500, 600)
 
-        self.cartField = QTextBrowser(self)
-        self.cartField.append("안녕")
-        self.cartField.resize(400,300)
-        self.cartField.move(50, 450)
-        self.cartField.setLineWrapMode(QTextBrowser.NoWrap)
-        self.cartField.verticalScrollBar().setValue(0)
+        self.pz_cartField = QTextBrowser(self)
+        self.pz_cartField.resize(400, 100)
+        self.pz_cartField.move(50, 450)
+        self.pz_cartField.setLineWrapMode(QTextBrowser.NoWrap)
+        self.pz_cartField.verticalScrollBar().setValue(0)
+
+        self.side_cartField = QTextBrowser(self)
+        self.side_cartField.resize(400, 100)
+        self.side_cartField.move(50, 600)
+        self.side_cartField.setLineWrapMode(QTextBrowser.NoWrap)
+        self.side_cartField.verticalScrollBar().setValue(0)
+
 
         self.showCart()
-        self.makeCombo()
+        self.makePizzaCombo()
+        self.makeSubCombo()
 
-    def makeCombo(self):
+    def makePizzaCombo(self):
         menu = ""
-        self.cb.addItem("삭제할 메뉴를 선택해주세요.")
+        add = ""
+        self.cb_pz.addItem("삭제할 피자를 선택해주세요.")
         with open('nowPizzaCart.txt') as file:
             for line in file.readlines():
                 result = line.strip().split('\t')
                 name = result[0]
                 amount = result[1]
                 price = result[2]
-                menu = name+" "+price
-                self.cb.addItem(menu)
+                dough = result[3]
+                size = result[4]
+                for i in range(5,7+1):
+                    if result[i]!='x':
+                        add += result[i]+" "
+
+                menu = name + "\n" + dough + "\n" + add + size + "\n" + price
+                self.cb_pz.addItem(menu)
+
+        self.cb_pz.currentTextChanged.connect(self.lb_pz.setText)
+        self.cb_pz.resize(self.cb_pz.sizeHint())
+
+
+    def makeSubCombo(self):
+        menu = ""
+        self.cb_side.addItem("삭제할 사이드를 선택해주세요.")
 
         with open('nowSubCart.txt') as file:
             for line in file.readlines():
@@ -553,18 +600,19 @@ class OrderWidget(QWidget):
                 amount = result[1]
                 price = result[2]
                 menu = name + " " + price
-                self.cb.addItem(menu)
+                self.cb_side.addItem(menu)
 
-        self.cb.currentTextChanged.connect(self.lb.setText)
+        self.cb_side.currentTextChanged.connect(self.lb_side.setText)
+        self.cb_side.resize(self.cb_side.sizeHint())
 
-
-    def clickDel(self):
+    def clickPizzaDel(self):
         option = QMessageBox.warning(self, "삭제", "메뉴를 삭제하시겠습니까?", QMessageBox.No | QMessageBox.Yes, QMessageBox.Yes)
         if option == QMessageBox.Yes:
 
             menu = ""
-            self.myCartInfo.setText("")
-            self.cartPrice = 0
+            add = ""
+            self.pz_cartField.clear()
+            self.pPrice = 0
 
             with open("nowPizzaCart.txt", "r") as f:
                 lines = f.readlines()
@@ -576,17 +624,34 @@ class OrderWidget(QWidget):
                     price = result[2]
                     dough = result[3]
                     size = result[4]
-                    menu = name + " " + price
-                    if menu != self.lb.text():
-                        self.cartPrice += int(price)
+                    for i in range(5, 7 + 1):
+                        if result[i] != 'x':
+                            add += result[i] + " "
+                    menu = name + "\n" + dough + "\n" + add + size + "\n" + price
+                    if menu != self.lb_pz.text():
+                        self.pPrice += int(price)
                         f.write(line)
                         print(line)
-                        self.cartField.append(name+" "+ str(amount)+"개 "+str(price)+"원\n"+dough+"/ 사이즈 :"+size)
+                        self.pz_cartField.append(name + " " + str(amount) + "개 " + str(price) + "원\n" + dough + ", 사이즈 : " +size +" " +add+"\n")
 
+            self.pizzaPrice.setText("총 피자 금액: " + str(self.pPrice))
+            self.pizzaPrice.adjustSize()
+            self.cb_pz.removeItem(self.cb_pz.currentIndex())
+            self.cartPrice = self.pPrice + self.sPrice
+            self.allPrice.setText("총 금액: " + str(self.cartPrice))
+            self.allPrice.adjustSize()
+
+
+    def clickSideDel(self):
+        option = QMessageBox.warning(self, "삭제", "사이드 메뉴를 삭제하시겠습니까?", QMessageBox.No | QMessageBox.Yes, QMessageBox.Yes)
+        if option == QMessageBox.Yes:
+
+            menu = ""
+            self.side_cartField.clear()
+            self.sPrice = 0
 
             with open("nowSubCart.txt", "r") as f:
                 lines = f.readlines()
-
             with open("nowSubCart.txt", "w") as f:
                 for line in lines:
                     result = line.strip().split('\t')
@@ -594,35 +659,38 @@ class OrderWidget(QWidget):
                     amount = result[1]
                     price = result[2]
                     menu = name + " " + price
-                    if menu != self.lb.text():
-                        self.cartPrice += int(price)
+                    if menu != self.lb_side.text():
+                        self.sPrice += int(price)
                         f.write(line)
                         print(line)
-                        self.cartField.append(name + " " + str(amount) + "개 " + str(price) + "원\n")
-                        print(self.cartPrice)
+                        self.side_cartField.append(name + " " + str(amount) + "개 " + str(price) + "원\n")
+                        print(self.sPrice)
 
-            self.allPrice.setText("총 금액 " + str(self.cartPrice))
-            print(str(self.cartPrice))
-            self.cb.removeItem(self.cb.currentIndex())
+            self.sidePrice.setText("총 사이드 금액: " + str(self.sPrice))
+            self.sidePrice.adjustSize()
+            self.cb_side.removeItem(self.cb_side.currentIndex())
+            self.cartPrice = self.pPrice + self.sPrice
+            self.allPrice.setText("총 금액: " + str(self.cartPrice))
+            self.allPrice.adjustSize()
+
 
     def showCart(self):
-        count = 0
 
+        add = ""
         with open('nowPizzaCart.txt') as file:
             for line in file.readlines():
                 result = line.strip().split('\t')
-                print(result)
                 name = result[0]
                 amount = result[1]
                 price = result[2]
                 dough = result[3]
                 size = result[4]
-
-                count += int(result[1])
-                self.cartPrice += int(price)
-                self.cartField.append(name+" "+ str(amount)+"개 "+str(price)+"원\n"+dough+", 사이즈 :"+size)
-
-
+                for i in range(5, 7 + 1):
+                    if result[i] != 'x':
+                        add += result[i] + " "
+                self.pPrice += int(price)
+                self.pizzaPrice.setText("총 피자 금액: " + str(self.pPrice))
+                self.pz_cartField.append(name + " " + str(amount) + "개 " + str(price) + "원\n" + dough + ", 사이즈 : " +size +" " +add+"\n")
 
         with open('nowSubCart.txt') as file:
             for line in file.readlines():
@@ -630,11 +698,12 @@ class OrderWidget(QWidget):
                 name = result[0]
                 amount = result[1]
                 price = result[2]
-                self.cartPrice += int(price)
-                self.cartField.append(name+" "+ str(amount)+"개 "+str(price)+"원\n")
+                self.sPrice += int(price)
+                self.sidePrice.setText("총 사이드 금액: " + str(self.sPrice))
+                self.side_cartField.append(name + " " + str(amount) + "개 " + str(price) + "원\n")
 
-        self.allPrice.setText("총 금액 "+str(self.cartPrice))
-
+        self.cartPrice = self.pPrice + self.sPrice
+        self.allPrice.setText("총 금액: " + str(self.cartPrice))
 
 
 class BuyWidget(QWidget):
@@ -697,18 +766,12 @@ class BuyWidget(QWidget):
                 self.cartPrice += int(price)
                 self.myCartInfo.setText(self.myCartInfo.text() + name + " " + str(amount) + "개 " + str(price) + "원\n")
         open('nowSubCart.txt', 'w').close()
-        self.allPrice.setText("총 금액 " + str(self.cartPrice)+"이 결제 되었습니다.\n주문 번호 : "+ str(num))
-        num+=1
-
-
+        self.allPrice.setText("총 금액 " + str(self.cartPrice) + "이 결제 되었습니다.\n주문 번호 : " + str(num))
+        num += 1
 
         self.turnBtn = QPushButton('처음으로', self)
         self.turnBtn.resize(200, 200)
         self.turnBtn.move(500, 500)
-
-
-
-
 
 
 class FameWidget(QWidget):
@@ -736,9 +799,9 @@ class FameWidget(QWidget):
         self.classicBtn.resize(200, 100)
         self.classicBtn.move(600, 100)
 
-        self.orderBtn = QPushButton("<",self)
+        self.orderBtn = QPushButton("<", self)
         self.orderBtn.resize(80, 80)
-        self.orderBtn.move(10,10)
+        self.orderBtn.move(10, 10)
 
         opacity = QGraphicsOpacityEffect(self.fameBtn)
         opacity.setOpacity(0)
@@ -758,7 +821,6 @@ class FameWidget(QWidget):
 
         self.showPlot()
 
-
     def showPlot(self):
         makePlot()
         self.plotImg = QLabel(self)
@@ -767,8 +829,6 @@ class FameWidget(QWidget):
         pixmap = QPixmap("plot.png")
         self.plotImg.setPixmap(QPixmap(pixmap))
         self.plotImg.repaint()
-
-
 
 
 class RecWidget_1(QWidget):
@@ -856,6 +916,7 @@ class RecWidget_1(QWidget):
         opacity.setOpacity(0)
         btn.setGraphicsEffect(opacity)
 
+
 class RecWidget_2(QWidget):
     def __init__(self, parent=None):
         super(RecWidget_2, self).__init__(parent)
@@ -911,7 +972,6 @@ class RecWidget_2(QWidget):
                       "starChefTruffleBazil",
                       1)
 
-
         self.prevBtn = QPushButton("&<", self)
         self.prevBtn.resize(50, 50)
         self.prevBtn.move(25, 500)
@@ -942,6 +1002,7 @@ class RecWidget_2(QWidget):
         opacity = QGraphicsOpacityEffect(btn)
         opacity.setOpacity(0)
         btn.setGraphicsEffect(opacity)
+
 
 class RecWidget_3(QWidget):
     def __init__(self, parent=None):
@@ -1028,6 +1089,7 @@ class RecWidget_3(QWidget):
         opacity.setOpacity(0)
         btn.setGraphicsEffect(opacity)
 
+
 # 프리미엄
 class PreWidget_1(QWidget):
     def __init__(self, parent=None):
@@ -1080,7 +1142,8 @@ class PreWidget_1(QWidget):
         self.pzExplain1 = QLabel("#드라이에이징_스테이크 #트러플", self)
         self.pz1Btn = QPushButton(self)
 
-        self.makeMenu(self.pz1, self.pzName1, self.pzPrice1, self.pzExplain1, self.pz1Btn, 80, 250, "starChefSignature", 1)
+        self.makeMenu(self.pz1, self.pzName1, self.pzPrice1, self.pzExplain1, self.pz1Btn, 80, 250, "starChefSignature",
+                      1)
 
         self.pz2 = QLabel(self)
         self.pzName2 = QLabel("스타 셰프 트러플 바질", self)
@@ -1088,7 +1151,8 @@ class PreWidget_1(QWidget):
         self.pzExplain2 = QLabel("#바질페스토와 스테이크 풍미", self)
         self.pz2Btn = QPushButton(self)
 
-        self.makeMenu(self.pz2, self.pzName2, self.pzPrice2, self.pzExplain2, self.pz2Btn, 300, 250, "starChefTruffleBazil",
+        self.makeMenu(self.pz2, self.pzName2, self.pzPrice2, self.pzExplain2, self.pz2Btn, 300, 250,
+                      "starChefTruffleBazil",
                       1)
 
         self.pz3 = QLabel(self)
@@ -1098,7 +1162,7 @@ class PreWidget_1(QWidget):
         self.pz3Btn = QPushButton(self)
 
         self.makeMenu(self.pz3, self.pzName3, self.pzPrice3, self.pzExplain3, self.pz3Btn, 520, 250,
-                      "globalLegend4",1)
+                      "globalLegend4", 1)
 
         self.pz4 = QLabel(self)
         self.pzName4 = QLabel("시리얼 칠리크랩", self)
@@ -1108,7 +1172,6 @@ class PreWidget_1(QWidget):
 
         self.makeMenu(self.pz4, self.pzName4, self.pzPrice4, self.pzExplain4, self.pz4Btn, 80, 540,
                       "serialChilliCrab", 2)
-
 
         self.pz5 = QLabel(self)
         self.pzName5 = QLabel("치즈케이크 블랙타이거", self)
@@ -1132,7 +1195,6 @@ class PreWidget_1(QWidget):
         self.nextBtn.resize(50, 50)
         self.nextBtn.move(725, 500)
 
-
     def makeMenu(self, img, name, price, explain, btn, x, y, path, floor):
         img.setPixmap(QPixmap("images/pizzamenu/" + path + ".jpg"))
         img.setScaledContents(True)
@@ -1155,6 +1217,7 @@ class PreWidget_1(QWidget):
         opacity = QGraphicsOpacityEffect(btn)
         opacity.setOpacity(0)
         btn.setGraphicsEffect(opacity)
+
 
 class PreWidget_2(QWidget):
     def __init__(self, parent=None):
@@ -1207,7 +1270,8 @@ class PreWidget_2(QWidget):
         self.pzExplain1 = QLabel("#블랙앵거스 비프에 랍스터볼까지", self)
         self.pz1Btn = QPushButton(self)
 
-        self.makeMenu(self.pz1, self.pzName1, self.pzPrice1, self.pzExplain1, self.pz1Btn, 80, 250, "blackAngersStake", 1)
+        self.makeMenu(self.pz1, self.pzName1, self.pzPrice1, self.pzExplain1, self.pz1Btn, 80, 250, "blackAngersStake",
+                      1)
 
         self.pz2 = QLabel(self)
         self.pzName2 = QLabel("베스트 콰트로", self)
@@ -1225,7 +1289,7 @@ class PreWidget_2(QWidget):
         self.pz3Btn = QPushButton(self)
 
         self.makeMenu(self.pz3, self.pzName3, self.pzPrice3, self.pzExplain3, self.pz3Btn, 520, 250,
-                      "blackTigerShrimp",1)
+                      "blackTigerShrimp", 1)
 
         self.pz4 = QLabel(self)
         self.pzName4 = QLabel("직화 스테이크", self)
@@ -1236,12 +1300,11 @@ class PreWidget_2(QWidget):
         self.makeMenu(self.pz4, self.pzName4, self.pzPrice4, self.pzExplain4, self.pz4Btn, 80, 540,
                       "zikhwaStake", 2)
 
-
         self.prevBtn = QPushButton("&<", self)
         self.prevBtn.resize(50, 50)
         self.prevBtn.move(25, 500)
 
-    def makeMenu(self, img, name, price, explain, btn, x, y, path,floor):
+    def makeMenu(self, img, name, price, explain, btn, x, y, path, floor):
         img.setPixmap(QPixmap("images/pizzamenu/" + path + ".jpg"))
         img.setScaledContents(True)
         img.setGeometry(QRect(x, y, 200, 200))
@@ -1251,19 +1314,18 @@ class PreWidget_2(QWidget):
         explain.setFont(QFont("여기어때 잘난체 OTF", 8))
         explain.setStyleSheet("Color : gray")
         if floor == 1:
-            name.move(x,460)
-            price.move(x,460+ name.height())
-            explain.move(x,480+ name.height())
+            name.move(x, 460)
+            price.move(x, 460 + name.height())
+            explain.move(x, 480 + name.height())
         else:
             name.move(x, 750)
-            price.move(x, 750+ name.height())
-            explain.move(x, 770+ name.height())
+            price.move(x, 750 + name.height())
+            explain.move(x, 770 + name.height())
         btn.resize(200, 260)
         btn.move(x, y)
         opacity = QGraphicsOpacityEffect(btn)
         opacity.setOpacity(0)
         btn.setGraphicsEffect(opacity)
-
 
 
 class ClaWidget_1(QWidget):
@@ -1369,7 +1431,6 @@ class ClaWidget_1(QWidget):
         self.nextBtn.resize(50, 50)
         self.nextBtn.move(725, 500)
 
-
     def makeMenu(self, img, name, price, explain, btn, x, y, path, floor):
         img.setPixmap(QPixmap("images/pizzamenu/" + path + ".jpg"))
         img.setScaledContents(True)
@@ -1392,6 +1453,7 @@ class ClaWidget_1(QWidget):
         opacity = QGraphicsOpacityEffect(btn)
         opacity.setOpacity(0)
         btn.setGraphicsEffect(opacity)
+
 
 class ClaWidget_2(QWidget):
     def __init__(self, parent=None):
@@ -1444,7 +1506,8 @@ class ClaWidget_2(QWidget):
         self.pzExplain1 = QLabel("#베이컨 매니아들의 원픽", self)
         self.pz1Btn = QPushButton(self)
 
-        self.makeMenu(self.pz1, self.pzName1, self.pzPrice1, self.pzExplain1, self.pz1Btn, 80, 250, "bacconCheddarCheese",
+        self.makeMenu(self.pz1, self.pzName1, self.pzPrice1, self.pzExplain1, self.pz1Btn, 80, 250,
+                      "bacconCheddarCheese",
                       1)
 
         self.pz2 = QLabel(self)
@@ -1492,6 +1555,7 @@ class ClaWidget_2(QWidget):
         opacity.setOpacity(0)
         btn.setGraphicsEffect(opacity)
 
+
 class AboutWidget(QWidget):
 
     def __init__(self, parent=None):
@@ -1509,15 +1573,15 @@ class AboutWidget(QWidget):
         self.doughPrice = 0
         self.pizzaAmount = 1
         self.resultPrice = 0
-        self.mainPrice =0
-        self.cheesePrice =0
-        self.afterPrice =0
+        self.mainPrice = 0
+        self.cheesePrice = 0
+        self.afterPrice = 0
         self.pizzaPrice = self.sizePrice + self.doughPrice + self.mainPrice + self.cheesePrice + self.afterPrice
 
     def setting(self, img_name, name, size_l, size_m):
 
         self.pzPic = QLabel(self)
-        self.pzPic.setPixmap(QPixmap("images/pizzamenu/"+img_name+".jpg"))
+        self.pzPic.setPixmap(QPixmap("images/pizzamenu/" + img_name + ".jpg"))
         self.pzPic.setScaledContents(True)
         self.pzPic.setGeometry(QRect(50, 300, 350, 350))
 
@@ -1532,7 +1596,7 @@ class AboutWidget(QWidget):
         self.sizeL = size_l
         self.sizeM = size_m
 
-        self.sizeLarge= 'L '+str(self.sizeL)+"원"
+        self.sizeLarge = 'L ' + str(self.sizeL) + "원"
         self.sizeMid = 'M ' + str(self.sizeM) + "원"
 
         self.flagL = 'L'
@@ -1587,7 +1651,6 @@ class AboutWidget(QWidget):
         self.txtPrice.move(530, 700)
         self.txtPrice.setFont(QFont("여기어때 잘난체 OTF", 15))
 
-
         # self.pzExplain = QLabel("#드라이에이징_스테이크 #트러플", self)
         # self.pzExplain.move(520, 890)
         # self.pzExplain.setFont(QFont("여기어때 잘난체 OTF", 8))
@@ -1610,7 +1673,7 @@ class AboutWidget(QWidget):
         self.topping.move(420, 540)
         self.topping.setFont(QFont("여기어때 잘난체 OTF", 15))
 
-        self.amLabel = QLabel("추가 메인 선택",self)
+        self.amLabel = QLabel("추가 메인 선택", self)
         self.amLabel.move(420, 580)
         self.amLabel.setFont(QFont("여기어때 잘난체 OTF", 11))
 
@@ -1624,7 +1687,6 @@ class AboutWidget(QWidget):
         self.am.addItem('파인애플 8개/40g')
         self.am.move(550, 580)
         self.am.activated[str].connect(self.mainSelect)
-
 
         self.acLabel = QLabel("추가 치즈 선택", self)
         self.acLabel.move(420, 610)
@@ -1659,12 +1721,14 @@ class AboutWidget(QWidget):
             QMessageBox.critical(self, "QMessageBox", "도우를 선택해주세요")
         else:
             option = QMessageBox.question(self, "카트", "카트에 담으시겠습니까?",
-                                                    QMessageBox.No | QMessageBox.Yes , QMessageBox.Yes)
+                                          QMessageBox.No | QMessageBox.Yes, QMessageBox.Yes)
             if option == QMessageBox.Yes:
                 QMessageBox.information(self, "카트", "카트에 담겼습니다!")
                 with open("nowPizzaCart.txt", mode="a") as file:
-                    file.write(self.pzName.text()+"\t"+str(self.pizzaAmount)+"\t"+str(self.resultPrice)+"\t"+ self.doughTxt.text()+"\t"+self.sizeFlag+"\t"+self.am.currentText()+"\t"+self.ac.currentText()+"\t"+self.aa.currentText()+"\n")
-                    print(self.pzName.text(),self.pizzaAmount,str(self.resultPrice),self.doughTxt.text(),self.sizeFlag,self.am.currentText(),self.ac.currentText(),self.aa.currentText())
+                    file.write(self.pzName.text() + "\t" + str(self.pizzaAmount) + "\t" + str(
+                        self.resultPrice) + "\t" + self.doughTxt.text() + "\t" + self.sizeFlag + "\t" + self.am.currentText() + "\t" + self.ac.currentText() + "\t" + self.aa.currentText() + "\n")
+                    print(self.pzName.text(), self.pizzaAmount, str(self.resultPrice), self.doughTxt.text(),
+                          self.sizeFlag, self.am.currentText(), self.ac.currentText(), self.aa.currentText())
 
     def value_changed(self):
         self.pzAmountLabel.setText(str(self.spinbox.value()))
@@ -1689,7 +1753,7 @@ class AboutWidget(QWidget):
         elif text == '오리지널 도우(더블 치즈엣지)':
             self.doughPrice += 5000
 
-        self.pizzaPrice = (self.doughPrice + self.sizePrice)+ self.mainPrice + self.cheesePrice + self.afterPrice
+        self.pizzaPrice = (self.doughPrice + self.sizePrice) + self.mainPrice + self.cheesePrice + self.afterPrice
         self.resultPrice = self.pizzaPrice * self.pizzaAmount
         self.txtPrice.setText(str(self.resultPrice))
         self.txtPrice.adjustSize()
@@ -1706,7 +1770,7 @@ class AboutWidget(QWidget):
         else:
             self.mainPrice += 1000
 
-        self.pizzaPrice = (self.doughPrice + self.sizePrice) + self.mainPrice+ self.cheesePrice + self.afterPrice
+        self.pizzaPrice = (self.doughPrice + self.sizePrice) + self.mainPrice + self.cheesePrice + self.afterPrice
         self.resultPrice = self.pizzaPrice * self.pizzaAmount
         self.txtPrice.setText(str(self.resultPrice))
         self.txtPrice.adjustSize()
@@ -1736,7 +1800,7 @@ class AboutWidget(QWidget):
         if text == 'x':
             self.afterPrice += 0
         else:
-            self.afterPrice +=1000
+            self.afterPrice += 1000
 
         self.pizzaPrice = (self.doughPrice + self.sizePrice) + self.mainPrice + self.cheesePrice + self.afterPrice
         self.resultPrice = self.pizzaPrice * self.pizzaAmount
@@ -1756,7 +1820,7 @@ class AboutWidget(QWidget):
             self.sizePrice += self.sizeM
             self.sizeFlag = self.flagM
 
-        self.pizzaPrice = (self.doughPrice + self.sizePrice)+ self.mainPrice + self.cheesePrice + self.afterPrice
+        self.pizzaPrice = (self.doughPrice + self.sizePrice) + self.mainPrice + self.cheesePrice + self.afterPrice
         self.resultPrice = self.pizzaPrice * self.pizzaAmount
         self.txtPrice.setText(str(self.resultPrice))
         self.txtPrice.adjustSize()
@@ -1791,370 +1855,6 @@ class SubWidget(QWidget):
         self.orderBtn = QPushButton("<", self)
         self.orderBtn.resize(80, 80)
         self.orderBtn.move(10, 10)
-
-        opacity = QGraphicsOpacityEffect(self.recommendBtn)
-        opacity.setOpacity(0)
-        self.recommendBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.sidedishBtn)
-        opacity.setOpacity(0)
-        self.sidedishBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.drinkBtn)
-        opacity.setOpacity(0)
-        self.drinkBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.etcBtn)
-        opacity.setOpacity(0)
-        self.etcBtn.setGraphicsEffect(opacity)
-
-        self.rec1 = QLabel(self)
-        self.recName1 = QLabel("셰프’s 토마토 파스타", self)
-        self.recPrice1 = QLabel("9800원", self)
-        self.rec1Btn = QPushButton(self)
-        self.makeMenu(self.rec1, self.recName1, self.recPrice1, self.rec1Btn, 80, 250, "tomato_pasta")
-
-        self.rec2 = QLabel(self)
-        self.recName2 = QLabel("셰프’s 트러플 바질 파스타", self)
-        self.recPrice2 = QLabel("9800원", self)
-        self.rec2Btn = QPushButton(self)
-        self.makeMenu(self.rec2, self.recName2, self.recPrice2, self.rec2Btn, 300, 250, "basil_pasta")
-
-        self.rec3 = QLabel(self)
-        self.recName3 = QLabel("스파이시 씨푸드 로제 파스타", self)
-        self.recPrice3 = QLabel("8800원", self)
-        self.rec3Btn = QPushButton(self)
-        self.makeMenu(self.rec3, self.recName3, self.recPrice3, self.rec3Btn, 520, 250, "rose_pasta")
-
-    def makeMenu(self, img, name, price, btn, x, y, path):
-        img.setPixmap(QPixmap("images/sidedish/" + path + ".jpg"))
-        img.setScaledContents(True)
-        img.setGeometry(QRect(x, y, 200, 200))
-        name.move(x, 460)
-        name.setFont(QFont("여기어때 잘난체 OTF", 10))
-        price.move(x, 480)
-        price.setFont(QFont("여기어때 잘난체 OTF", 9))
-        btn.resize(200, 260)
-        btn.move(x, y)
-        opacity = QGraphicsOpacityEffect(btn)
-        opacity.setOpacity(0)
-        btn.setGraphicsEffect(opacity)
-
-
-class Sub_SideWidget1(QWidget):
-    def __init__(self, parent=None):
-        super(Sub_SideWidget1, self).__init__(parent)
-
-        self.recPz = QLabel(self)
-        self.recPz.resize(800, 950)
-        pixmap = QPixmap("images/subMenu2.png")
-        self.recPz.setPixmap(QPixmap(pixmap))
-
-        self.recommendBtn = QPushButton(self)
-        self.recommendBtn.resize(200, 100)
-        self.recommendBtn.move(0, 100)
-
-        self.sidedishBtn = QPushButton(self)
-        self.sidedishBtn.resize(200, 100)
-        self.sidedishBtn.move(200, 100)
-
-        self.drinkBtn = QPushButton(self)
-        self.drinkBtn.resize(200, 100)
-        self.drinkBtn.move(400, 100)
-
-        self.etcBtn = QPushButton(self)
-        self.etcBtn.resize(200, 100)
-        self.etcBtn.move(600, 100)
-
-        self.orderBtn = QPushButton("<", self)
-        self.orderBtn.resize(80, 80)
-        self.orderBtn.move(10, 10)
-
-        opacity = QGraphicsOpacityEffect(self.recommendBtn)
-        opacity.setOpacity(0)
-        self.recommendBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.sidedishBtn)
-        opacity.setOpacity(0)
-        self.sidedishBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.drinkBtn)
-        opacity.setOpacity(0)
-        self.drinkBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.etcBtn)
-        opacity.setOpacity(0)
-        self.etcBtn.setGraphicsEffect(opacity)
-
-        self.rec1 = QLabel(self)
-        self.recName1 = QLabel("셰프’s 토마토 파스타", self)
-        self.recPrice1 = QLabel("9800원", self)
-        self.rec1Btn = QPushButton(self)
-        self.makeMenu(self.rec1, self.recName1, self.recPrice1, self.rec1Btn, 80, 250, "tomato_pasta", 1)
-
-        self.rec2 = QLabel(self)
-        self.recName2 = QLabel("셰프’s 트러플 바질 파스타", self)
-        self.recPrice2 = QLabel("9800원", self)
-        self.rec2Btn = QPushButton(self)
-        self.makeMenu(self.rec2, self.recName2, self.recPrice2, self.rec2Btn, 300, 250, "basil_pasta", 1)
-
-        self.rec3 = QLabel(self)
-        self.recName3 = QLabel("스파이시 씨푸드 로제 파스타", self)
-        self.recPrice3 = QLabel("8800원", self)
-        self.rec3Btn = QPushButton(self)
-        self.makeMenu(self.rec3, self.recName3, self.recPrice3, self.rec3Btn, 520, 250, "rose_pasta", 1)
-
-        self.rec4 = QLabel(self)
-        self.recName4 = QLabel("크리스피 핫 순살 치킨\n(8조각)", self)
-        self.recPrice4 = QLabel("4800원", self)
-        self.rec4Btn = QPushButton(self)
-        self.makeMenu(self.rec4, self.recName4, self.recPrice4, self.rec4Btn, 80, 540, "crispy_chicken", 2)
-
-        self.rec5 = QLabel(self)
-        self.recName5 = QLabel("샐러드 가든", self)
-        self.recPrice5 = QLabel("6800원", self)
-        self.rec5Btn = QPushButton(self)
-        self.makeMenu(self.rec5, self.recName5, self.recPrice5, self.rec5Btn, 300, 540, "salad", 2)
-
-        self.rec6 = QLabel(self)
-        self.recName6 = QLabel("펜네 파스타", self)
-        self.recPrice6 = QLabel("8800원", self)
-        self.rec6Btn = QPushButton(self)
-        self.makeMenu(self.rec6, self.recName6, self.recPrice6, self.rec6Btn, 520, 540, "penne_pasta", 2)
-
-        self.nextBtn = QPushButton("&>", self)
-        self.nextBtn.resize(50, 50)
-        self.nextBtn.move(725, 500)
-
-    def makeMenu(self, img, name, price, btn, x, y, path, floor):
-        img.setPixmap(QPixmap("images/sidedish/" + path + ".jpg"))
-        img.setScaledContents(True)
-        img.setGeometry(QRect(x, y, 200, 200))
-        name.setFont(QFont("여기어때 잘난체 OTF", 10))
-        name.resize(name.sizeHint())
-        if floor == 1:
-            name.move(x, 460)
-            price.move(x, 460 + name.height())
-        else:
-            name.move(x, 750)
-            price.move(x, 750 + name.height())
-        price.setFont(QFont("여기어때 잘난체 OTF", 9))
-        btn.resize(200, 260)
-        btn.move(x, y)
-        opacity = QGraphicsOpacityEffect(btn)
-        opacity.setOpacity(0)
-        btn.setGraphicsEffect(opacity)
-
-
-class Sub_SideWidget2(QWidget):
-    def __init__(self, parent=None):
-        super(Sub_SideWidget2, self).__init__(parent)
-
-        self.recPz = QLabel(self)
-        self.recPz.resize(800, 950)
-        pixmap = QPixmap("images/subMenu2.png")
-        self.recPz.setPixmap(QPixmap(pixmap))
-
-        self.recommendBtn = QPushButton(self)
-        self.recommendBtn.resize(200, 100)
-        self.recommendBtn.move(0, 100)
-
-        self.sidedishBtn = QPushButton(self)
-        self.sidedishBtn.resize(200, 100)
-        self.sidedishBtn.move(200, 100)
-
-        self.drinkBtn = QPushButton(self)
-        self.drinkBtn.resize(200, 100)
-        self.drinkBtn.move(400, 100)
-
-        self.etcBtn = QPushButton(self)
-        self.etcBtn.resize(200, 100)
-        self.etcBtn.move(600, 100)
-
-        self.orderBtn = QPushButton("<", self)
-        self.orderBtn.resize(80, 80)
-        self.orderBtn.move(10, 10)
-
-        opacity = QGraphicsOpacityEffect(self.recommendBtn)
-        opacity.setOpacity(0)
-        self.recommendBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.sidedishBtn)
-        opacity.setOpacity(0)
-        self.sidedishBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.drinkBtn)
-        opacity.setOpacity(0)
-        self.drinkBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.etcBtn)
-        opacity.setOpacity(0)
-        self.etcBtn.setGraphicsEffect(opacity)
-
-        self.rec1 = QLabel(self)
-        self.recName1 = QLabel("슈퍼곡물 치킨(10조각)", self)
-        self.recPrice1 = QLabel("7800원", self)
-        self.rec1Btn = QPushButton(self)
-        self.makeMenu(self.rec1, self.recName1, self.recPrice1, self.rec1Btn, 80, 250, "grain_chicken", 1)
-
-        self.rec2 = QLabel(self)
-        self.recName2 = QLabel("NEW 치즈 볼로네즈 스파게티", self)
-        self.recPrice2 = QLabel("8800원", self)
-        self.rec2Btn = QPushButton(self)
-        self.makeMenu(self.rec2, self.recName2, self.recPrice2, self.rec2Btn, 300, 250, "bolognese_spaghetti", 1)
-
-        self.rec3 = QLabel(self)
-        self.recName3 = QLabel("트러플 리조또", self)
-        self.recPrice3 = QLabel("8800원", self)
-        self.rec3Btn = QPushButton(self)
-        self.makeMenu(self.rec3, self.recName3, self.recPrice3, self.rec3Btn, 520, 250, "truffle_risotto", 1)
-
-        self.rec4 = QLabel(self)
-        self.recName4 = QLabel("하프&하프 스파게티\n(NEW 치즈 & 화이트 크림)", self)
-        self.recPrice4 = QLabel("9800원", self)
-        self.rec4Btn = QPushButton(self)
-        self.makeMenu(self.rec4, self.recName4, self.recPrice4, self.rec4Btn, 80, 540, "half_spaghetti", 2)
-
-        self.rec5 = QLabel(self)
-        self.recName5 = QLabel("화이트 크림 스파게티", self)
-        self.recPrice5 = QLabel("8800원", self)
-        self.rec5Btn = QPushButton(self)
-        self.makeMenu(self.rec5, self.recName5, self.recPrice5, self.rec5Btn, 300, 540, "cream_spaghetti", 2)
-
-        self.rec6 = QLabel(self)
-        self.recName6 = QLabel("갈릭&허브윙스(8조각)", self)
-        self.recPrice6 = QLabel("8800원", self)
-        self.rec6Btn = QPushButton(self)
-        self.makeMenu(self.rec6, self.recName6, self.recPrice6, self.rec6Btn, 520, 540, "wings", 2)
-
-        self.prevBtn = QPushButton("&<", self)
-        self.prevBtn.resize(50, 50)
-        self.prevBtn.move(25, 500)
-
-    def makeMenu(self, img, name, price, btn, x, y, path, floor):
-        img.setPixmap(QPixmap("images/sidedish/" + path + ".jpg"))
-        img.setScaledContents(True)
-        img.setGeometry(QRect(x, y, 200, 200))
-        name.setFont(QFont("여기어때 잘난체 OTF", 10))
-        name.resize(name.sizeHint())
-        if floor == 1:
-            name.move(x, 460)
-            price.move(x, 460 + name.height())
-        else:
-            name.move(x, 750)
-            price.move(x, 750 + name.height())
-        price.setFont(QFont("여기어때 잘난체 OTF", 9))
-        btn.resize(200, 260)
-        btn.move(x, y)
-        opacity = QGraphicsOpacityEffect(btn)
-        opacity.setOpacity(0)
-        btn.setGraphicsEffect(opacity)
-
-
-class Sub_DrinkWidget(QWidget):
-    def __init__(self, parent=None):
-        super(Sub_DrinkWidget, self).__init__(parent)
-
-        self.recPz = QLabel(self)
-        self.recPz.resize(800, 950)
-        pixmap = QPixmap("images/subMenu3.png")
-        self.recPz.setPixmap(QPixmap(pixmap))
-
-        self.recommendBtn = QPushButton(self)
-        self.recommendBtn.resize(200, 100)
-        self.recommendBtn.move(0, 100)
-
-        self.sidedishBtn = QPushButton(self)
-        self.sidedishBtn.resize(200, 100)
-        self.sidedishBtn.move(200, 100)
-
-        self.drinkBtn = QPushButton(self)
-        self.drinkBtn.resize(200, 100)
-        self.drinkBtn.move(400, 100)
-
-        self.etcBtn = QPushButton(self)
-        self.etcBtn.resize(200, 100)
-        self.etcBtn.move(600, 100)
-
-        self.orderBtn = QPushButton("<", self)
-        self.orderBtn.resize(80, 80)
-        self.orderBtn.move(10, 10)
-
-        opacity = QGraphicsOpacityEffect(self.recommendBtn)
-        opacity.setOpacity(0)
-        self.recommendBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.sidedishBtn)
-        opacity.setOpacity(0)
-        self.sidedishBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.drinkBtn)
-        opacity.setOpacity(0)
-        self.drinkBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.etcBtn)
-        opacity.setOpacity(0)
-        self.etcBtn.setGraphicsEffect(opacity)
-
-
-class Sub_EtcWidget(QWidget):
-    def __init__(self, parent=None):
-        super(Sub_EtcWidget, self).__init__(parent)
-
-        self.recPz = QLabel(self)
-        self.recPz.resize(800, 950)
-        pixmap = QPixmap("images/subMenu4.png")
-        self.recPz.setPixmap(QPixmap(pixmap))
-
-        self.recommendBtn = QPushButton(self)
-        self.recommendBtn.resize(200, 100)
-        self.recommendBtn.move(0, 100)
-
-        self.sidedishBtn = QPushButton(self)
-        self.sidedishBtn.resize(200, 100)
-        self.sidedishBtn.move(200, 100)
-
-        self.drinkBtn = QPushButton(self)
-        self.drinkBtn.resize(200, 100)
-        self.drinkBtn.move(400, 100)
-
-        self.etcBtn = QPushButton(self)
-        self.etcBtn.resize(200, 100)
-        self.etcBtn.move(600, 100)
-
-        self.orderBtn = QPushButton("<", self)
-        self.orderBtn.resize(80, 80)
-        self.orderBtn.move(10, 10)
-
-        opacity = QGraphicsOpacityEffect(self.recommendBtn)
-        opacity.setOpacity(0)
-        self.recommendBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.sidedishBtn)
-        opacity.setOpacity(0)
-        self.sidedishBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.drinkBtn)
-        opacity.setOpacity(0)
-        self.drinkBtn.setGraphicsEffect(opacity)
-        opacity = QGraphicsOpacityEffect(self.etcBtn)
-        opacity.setOpacity(0)
-        self.etcBtn.setGraphicsEffect(opacity)
-
-
-class SubAboutWidget(QWidget):
-    def __init__(self, parent=None):
-        super(SubAboutWidget, self).__init__(parent)
-
-        self.famePz = QLabel(self)
-        self.famePz.resize(800, 950)
-        self.subBack = QLabel(self)
-        self.subBack.resize(800, 950)
-
-        pixmap = QPixmap("images/subMenu1.png")
-        self.subBack.setPixmap(QPixmap(pixmap))
-
-        self.recommendBtn = QPushButton(self)
-        self.recommendBtn.resize(200, 100)
-        self.recommendBtn.move(0, 100)
-
-        self.sidedishBtn = QPushButton(self)
-        self.sidedishBtn.resize(200, 100)
-        self.sidedishBtn.move(200, 100)
-
-        self.drinkBtn = QPushButton(self)
-        self.drinkBtn.resize(200, 100)
-        self.drinkBtn.move(400, 100)
-
-        self.etcBtn = QPushButton(self)
-        self.etcBtn.resize(200, 100)
-        self.etcBtn.move(600, 100)
 
         opacity = QGraphicsOpacityEffect(self.recommendBtn)
         opacity.setOpacity(0)
@@ -2655,15 +2355,6 @@ class SubAboutWidget(QWidget):
         self.pzPrice.setText(str(self.num_spin.value() * self.price))
         self.pzPrice.resize(self.pzPrice.sizeHint())
 
-        pixmap = QPixmap("images/toppingBack.png")
-        self.famePz.setPixmap(QPixmap(pixmap))
-
-
-
-    def setPrice(self):
-        self.pzPrice.setText(str(self.num_spin.value() * self.price))
-        self.pzPrice.resize(self.pzPrice.sizeHint())
-
     def onActivated(self, text):
         self.lbl.setText(text)
         self.lbl.adjustSize()
@@ -2674,9 +2365,8 @@ class SubAboutWidget(QWidget):
         if option == QMessageBox.Yes:  # 버튼의 이름을 넣으면 됩니다.
             QMessageBox.information(self, "카트", "카트에 담겼습니다!")
             with open("nowSubCart.txt", mode="a") as file:
-                file.write(self.pzName.text()+ "\t"+str(self.num_spin.value())+"\t"+self.pzPrice.text() + "\n")
+                file.write(self.pzName.text() + "\t" + str(self.num_spin.value()) + "\t" + self.pzPrice.text() + "\n")
                 print(self.pzName.text(), str(self.num_spin.value()), self.pzPrice.text())
-
 
 
 if __name__ == '__main__':
@@ -2684,6 +2374,3 @@ if __name__ == '__main__':
     window = MainWindow()
     window.show()
     app.exec_()
-elif sys.exit():
-    open('nowPizzaCart.txt', 'w').close()
-    open('nowSubCart.txt', 'w').close()

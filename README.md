@@ -23,4 +23,4 @@ DB : File i/o
 ## 정보
 
 김연희 - imgimyoni@gmail.com <br>
-김아름 – arum0505@gmail.com<br>
+김아름 – kimarum2003@gmail.com<br>
